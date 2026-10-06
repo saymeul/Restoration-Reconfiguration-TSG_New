@@ -1,0 +1,11 @@
+damage_rank,attack_id,target_observation_id,case_count,mean_degradation_kwh,max_degradation_kwh,damaging_cases,detection_rate_pct,bypass_rate_pct,mitigation_recovery_pct,mean_load_changes,mean_switch_changes
+1,dispatch_s890_branchflow_l8_voltage_816,action_mask.Load_s890;branchflow.Line.l8;bus_voltage.816,30,3080.848812,9115.475195,17,100.0,0.0,94.117647,1.3,0.033333
+2,dispatch_s890_voltage_816,action_mask.Load_s890;bus_voltage.816,30,3080.848812,9115.475195,17,100.0,0.0,94.117647,1.3,0.033333
+3,hidden_l28_voltage_816_dispatch_s890,topology_edge.Line.l28;bus_voltage.816;action_mask.Load_s890,30,3080.848805,9115.474992,17,100.0,0.0,94.117647,1.366667,0.0
+4,dispatch_s890_line_l8_voltage_816,action_mask.Load_s890;topology_edge.Line.l8;bus_voltage.816,30,3065.621677,9124.529627,17,100.0,0.0,94.117647,1.433333,0.133333
+5,dispatch_s890_switch_swtie4,action_mask.Load_s890;action_mask.swtie4,30,3009.213936,8808.308393,14,100.0,0.0,100.0,1.0,0.766667
+6,dispatch_s844_switch_swtie1,action_mask.Load_s844;action_mask.swtie1,30,1641.45376,8667.718292,12,100.0,0.0,100.0,1.0,1.0
+7,dispatch_s844_voltage_852,action_mask.Load_s844;bus_voltage.852,30,1639.676983,8663.260039,17,100.0,0.0,100.0,1.066667,0.0
+8,switch_swtie4_line_l8_voltage_816,action_mask.swtie4;topology_edge.Line.l8;bus_voltage.816,30,83.651222,419.902878,9,100.0,0.0,100.0,0.433333,0.9
+9,hidden_l30_switch_swtie4,topology_edge.Line.l30;action_mask.swtie4,30,72.473552,434.266275,9,100.0,0.0,100.0,0.1,0.8
+10,line_l8_line_824848_voltage_816,topology_edge.Line.l8;topology_edge.Line.824848;bus_voltage.816,30,49.149835,419.903108,5,100.0,0.0,100.0,0.566667,0.233333

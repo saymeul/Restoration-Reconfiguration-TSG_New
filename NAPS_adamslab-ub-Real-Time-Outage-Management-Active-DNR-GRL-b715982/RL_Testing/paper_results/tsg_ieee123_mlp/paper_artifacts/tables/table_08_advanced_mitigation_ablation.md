@@ -1,0 +1,4 @@
+# Table 8. IEEE 123 Advanced Mitigation Ablation
+
+| variant | variant_family | case_count | total_attacked_degradation_kwh | total_residual_kwh | max_residual_kwh | total_recovered_kwh | total_recovery_pct | cases_improved_vs_current | cases_worse_vs_current | total_residual_reduction_vs_current_kwh |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

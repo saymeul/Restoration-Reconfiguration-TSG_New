@@ -1,0 +1,7 @@
+variant,variant_family,case_count,total_attacked_physical_degradation_kwh,total_variant_residual_degradation_kwh,mean_variant_residual_degradation_kwh,max_variant_residual_degradation_kwh,total_variant_degradation_recovered_kwh,total_recovery_ratio_clipped,mean_recovery_ratio_clipped,cases_improved_vs_current,cases_equal_vs_current,cases_worse_vs_current,total_residual_reduction_vs_current_kwh,mean_residual_reduction_vs_current_kwh
+all_channel_reference_only,advanced_candidate,58,2617.431790720156,0.0,0.0,0.0,2617.431790720156,1.0,1.0,58,0,0,2617.431790720156,45.12813432276131
+detector_mitigated_only,advanced_candidate,58,2617.431790720156,0.0,0.0,0.0,2617.431790720156,1.0,1.0,58,0,0,2617.431790720156,45.12813432276131
+horizon_screen_raw_mitigated,advanced_horizon_screening,58,2617.431790720156,0.0,0.0,0.0,2617.431790720156,1.0,1.0,58,0,0,2617.431790720156,45.12813432276131
+horizon_screen_raw_mitigated_reference,advanced_horizon_screening,58,2617.431790720156,0.0,0.0,0.0,2617.431790720156,1.0,1.0,58,0,0,2617.431790720156,45.12813432276131
+attacked_no_defense,baseline,58,2617.431790720156,2617.431790720156,45.12813432276131,849.6391818943812,0.0,0.0,0.0,0,58,0,0.0,0.0
+current_one_step_fdia_aware,current_mitigation,58,2617.431790720156,2617.431790720156,45.12813432276131,849.6391818943812,0.0,0.0,0.0,0,58,0,0.0,0.0

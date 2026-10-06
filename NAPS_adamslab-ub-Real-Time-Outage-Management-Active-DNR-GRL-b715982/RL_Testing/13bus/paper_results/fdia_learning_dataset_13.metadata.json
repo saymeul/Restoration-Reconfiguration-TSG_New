@@ -1,0 +1,17 @@
+{
+  "samples": 375,
+  "features": 11,
+  "feature_mode": "bdd_residuals",
+  "attack_counts": {
+    "clean": 75,
+    "voltage_masking": 75,
+    "branchflow_hiding": 75,
+    "energy_inflation": 75,
+    "topology_drop": 75
+  },
+  "scenario_counts": {
+    "SC1": 125,
+    "SC2": 125,
+    "random": 125
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "feature_keys": [
+    "voltage_mae_active",
+    "voltage_max_abs",
+    "voltage_changed_fraction",
+    "branchflow_mae",
+    "branchflow_relative_mae",
+    "branchflow_max_abs",
+    "energy_abs",
+    "voltage_violation_abs",
+    "topology_changed_entry_fraction",
+    "topology_changed_edge_fraction",
+    "action_mask_changed_fraction"
+  ],
+  "num_features": 11,
+  "feature_names_preview": [
+    "voltage_mae_active",
+    "voltage_max_abs",
+    "voltage_changed_fraction",
+    "branchflow_mae",
+    "branchflow_relative_mae",
+    "branchflow_max_abs",
+    "energy_abs",
+    "voltage_violation_abs",
+    "topology_changed_entry_fraction",
+    "topology_changed_edge_fraction",
+    "action_mask_changed_fraction"
+  ]
+}

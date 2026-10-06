@@ -1,0 +1,213 @@
+% Companion-controller simulation section for MLP and BPSO evidence.
+% Suggested placement: after the main GRL case-study results or in an appendix.
+
+\section{Companion Controller Simulations and Comparative Discussion}
+\label{sec:companion_controller_results}
+
+The primary case-study evidence in this manuscript is based on the GRL restoration controller. Additional simulations were also performed for MLP and BPSO controllers. These companion results are useful for checking whether the observed cyber-physical vulnerabilities are controller-specific or shared across different decision mechanisms. They should be interpreted with care. The GRL and MLP rows use frozen full-observation controller evidence. The BPSO rows are a scoped p2/i2 evidence package in which the received action mask is directly used as an optimizer availability constraint; therefore, BPSO action-mask/status FDIA is directly comparable, while BPSO voltage, branch-flow, topology, and energy-channel FDIA should not be claimed as full vulnerabilities without a richer perceived-objective BPSO model.
+
+\subsection{IEEE 34-Bus MLP Companion Evidence}
+\label{subsec:ieee34_mlp_companion}
+
+The IEEE 34-bus MLP companion package is a negative-result evidence set. Across the paper-facing MLP studies, no positive physical degradation is reported. This includes baseline attack families, attack-sensitivity rows, branch-flow hiding, coordinated attacks, dispatch-load action-mask criticality, line-status false-open and false-closed criticality, switch action-mask criticality, voltage false-low criticality, and the advanced defense/stealth studies. The detector can still flag attacks in these simulations, but the corrupted observations do not reduce restored energy relative to the clean MLP action under the frozen paper-facing cases.
+
+\begin{table*}[t]
+\centering
+\caption{IEEE 34-bus MLP paper-facing study summary.}
+\label{tab:ieee34_mlp_study_summary}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Study & Rows & Damaging rows & Top entity & Top mean $D$ & Top detection \\
+\hline
+Advanced defense learning stealth stress & 48 & 0 & \texttt{Load\_s890;Line.l8;bus\_voltage.816} & 0.000 & 100.000\% \\
+Advanced defense stealth stress & 48 & 0 & \texttt{Load\_s890;Line.l8;bus\_voltage.816} & 0.000 & 100.000\% \\
+Attack-family baseline & 5 & 0 & \texttt{action\_mask\_false\_unavailable} & 0.000 & 100.000\% \\
+Attack sensitivity & 25 & 0 & \texttt{action\_mask\_false\_unavailable\_L1} & 0.000 & 100.000\% \\
+Branch-flow hide criticality & 36 & 0 & \texttt{branchflow.Line.l1} & 0.000 & 96.400\% \\
+Coordinated attack study & 10 & 0 & \texttt{Load\_s844;swtie1} & 0.000 & 100.000\% \\
+Dispatch-load false-unavailable criticality & 10 & 0 & \texttt{Load\_d808\_810sb} & 0.000 & 100.000\% \\
+Line-status false-closed criticality & 31 & 0 & \texttt{topology\_edge.Line.l1} & 0.000 & 100.000\% \\
+Line-status false-open criticality & 40 & 0 & \texttt{topology\_edge.Line.814828} & 0.000 & 100.000\% \\
+Switch action-mask criticality & 9 & 0 & \texttt{action\_mask.swsec1} & 0.000 & 100.000\% \\
+Voltage false-low criticality & 37 & 0 & \texttt{bus\_voltage.800} & 0.000 & 100.000\% \\
+\hline
+\end{tabular}
+\end{table*}
+
+This negative result should not be presented as a universal security guarantee for MLP restoration. It means that the particular MLP policy, attack definitions, outage cases, and paper-facing target registries did not produce positive restored-energy degradation in the IEEE 34-bus companion package. The result is still valuable because it shows that the large IEEE 34 GRL vulnerabilities are not merely artifacts of the feeder or OpenDSS environment; they depend on how the controller uses the attacked observation.
+
+\subsection{IEEE 123-Bus Controller Evidence Completeness}
+\label{subsec:ieee123_controller_completeness}
+
+The IEEE 123-bus comparison package contains three controller evidence levels. GRL and MLP have full frozen case-study evidence. BPSO has a scoped action-mask-focused evidence package. All three have complete 150-case baseline attack-family rows. GRL includes 41 action-mask rows, 138 branch-flow rows, six branch-flow subset rows, 190 defense rows, and six advanced mitigation rows. MLP includes 41 action-mask rows, 130 voltage rows, 129 branch-flow rows, six branch-flow subset rows, and 181 defense rows. BPSO includes 41 action-mask rows, 46 defense rows, and six advanced mitigation rows, but no claimed full voltage or branch-flow criticality.
+
+\begin{table*}[t]
+\centering
+\caption{IEEE 123-bus controller evidence completeness.}
+\label{tab:ieee123_controller_evidence_completeness}
+\scriptsize
+\begin{tabular}{llcccccccc}
+\hline
+Controller & Evidence level & Baseline cases & Action-mask rows & Voltage rows & Branch-flow rows & Subset rows & Defense rows & Advanced rows & Missing \\
+\hline
+GRL & Full frozen & 150 & 41 & 0 & 138 & 6 & 190 & 6 & 0 \\
+MLP & Full frozen & 150 & 41 & 130 & 129 & 6 & 181 & 0 & 0 \\
+BPSO & Scoped p2/i2 action-mask & 150 & 41 & 0 & 0 & 0 & 46 & 6 & 0 \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsection{IEEE 123-Bus Baseline Attack-Family Comparison}
+\label{subsec:ieee123_controller_attack_family}
+
+The baseline comparison shows that the most damaging attack family depends on the controller. For GRL, the most damaging available baseline family is branch-flow hiding, with mean degradation 104.039 kWh, maximum degradation 1559.847 kWh, six damaging cases, 80.000\% detection, and 66.667\% mitigation recovery. For MLP, branch-flow hiding is also the most damaging baseline family, but the impact is lower: mean degradation 54.449 kWh, maximum degradation 829.460 kWh, two damaging cases, 80.000\% detection, and 100.000\% recovery. For BPSO, the scoped dominant family is action-mask false-unavailable, with mean degradation 678.300 kWh, maximum degradation 4439.399 kWh, 15 damaging cases, 100.000\% detection, and 86.667\% recovery.
+
+\begin{table*}[t]
+\centering
+\caption{IEEE 123-bus baseline attack-family comparison across GRL, MLP, and scoped BPSO evidence.}
+\label{tab:ieee123_controller_attack_family}
+\scriptsize
+\begin{tabular}{lllcccccc}
+\hline
+Controller & Evidence & Attack & Cases & Mean $D$ & Max $D$ & Damaging & Detection & Recovery \\
+\hline
+GRL & Full frozen & \texttt{branchflow\_hiding} & 30 & 104.039 & 1559.847 & 6 & 80.000\% & 66.667\% \\
+GRL & Full frozen & \texttt{topology\_drop} & 30 & 56.222 & 884.793 & 3 & 100.000\% & 66.667\% \\
+GRL & Full frozen & \texttt{voltage\_masking} & 30 & 26.210 & 786.306 & 1 & 86.667\% & 100.000\% \\
+GRL & Full frozen & \texttt{energy\_inflation} & 30 & 10.745 & 322.342 & 1 & 100.000\% & 100.000\% \\
+GRL & Full frozen & \texttt{action\_mask\_false\_unavailable} & 30 & 7.586 & 76.690 & 9 & 100.000\% & 100.000\% \\
+MLP & Full frozen & \texttt{branchflow\_hiding} & 30 & 54.449 & 829.460 & 2 & 80.000\% & 100.000\% \\
+MLP & Full frozen & \texttt{action\_mask\_false\_unavailable} & 30 & 26.801 & 804.024 & 1 & 100.000\% & 100.000\% \\
+MLP & Full frozen & \texttt{energy\_inflation} & 30 & 0.000 & 0.000 & 0 & 100.000\% & 0.000\% \\
+MLP & Full frozen & \texttt{topology\_drop} & 30 & 0.000 & 0.000 & 0 & 100.000\% & 0.000\% \\
+MLP & Full frozen & \texttt{voltage\_masking} & 30 & 0.000 & 0.000 & 0 & 86.667\% & 0.000\% \\
+BPSO & Scoped & \texttt{action\_mask\_false\_unavailable} & 30 & 678.300 & 4439.399 & 15 & 100.000\% & 86.667\% \\
+BPSO & Scoped & \texttt{branchflow\_hiding} & 30 & 0.000 & 0.000 & 0 & 80.000\% & 0.000\% \\
+BPSO & Scoped & \texttt{energy\_inflation} & 30 & 0.000 & 0.000 & 0 & 100.000\% & 0.000\% \\
+BPSO & Scoped & \texttt{topology\_drop} & 30 & 0.000 & 0.000 & 0 & 100.000\% & 0.000\% \\
+BPSO & Scoped & \texttt{voltage\_masking} & 30 & 0.000 & 0.000 & 0 & 86.667\% & 0.000\% \\
+\hline
+\end{tabular}
+\end{table*}
+
+\begin{table}[t]
+\centering
+\caption{Top baseline attack by controller for IEEE 123-bus companion comparison.}
+\label{tab:ieee123_top_attack_by_controller}
+\scriptsize
+\begin{tabular}{lcccc}
+\hline
+Controller & Top attack & Mean $D$ & Max $D$ & Damaging \\
+\hline
+GRL & \texttt{branchflow\_hiding} & 104.039 & 1559.847 & 6 \\
+MLP & \texttt{branchflow\_hiding} & 54.449 & 829.460 & 2 \\
+BPSO & \texttt{action\_mask\_false\_unavailable} & 678.300 & 4439.399 & 15 \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{IEEE 123-Bus MLP Criticality Results}
+\label{subsec:ieee123_mlp_criticality}
+
+The IEEE 123 MLP criticality evidence shows lower vulnerability than the GRL action-mask criticality study. In the MLP action-mask criticality table, the largest target is \texttt{action\_mask.swsec11}, with mean degradation 54.449 kWh, maximum degradation 829.460 kWh, two damaging cases, 100.000\% detection, and 100.000\% recovery. Three additional targets have nonzero mean degradation of 27.649 kWh: \texttt{action\_mask.Load\_s11a}, \texttt{action\_mask.swtie2}, and \texttt{action\_mask.swtie9}. The remaining listed action-mask targets in the paper-facing table have zero positive mean and maximum degradation.
+
+\begin{table}[t]
+\centering
+\caption{Selected IEEE 123-bus MLP action-mask criticality rows.}
+\label{tab:ieee123_mlp_action_mask_criticality}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Target & Cases & Mean $D$ & Max $D$ & Damaging & Recovery \\
+\hline
+\texttt{action\_mask.swsec11} & 30 & 54.449 & 829.460 & 2 & 100.000\% \\
+\texttt{action\_mask.Load\_s11a} & 30 & 27.649 & 829.460 & 1 & 100.000\% \\
+\texttt{action\_mask.swtie2} & 30 & 27.649 & 829.460 & 1 & 100.000\% \\
+\texttt{action\_mask.swtie9} & 30 & 27.649 & 829.460 & 1 & 100.000\% \\
+Other listed MLP action-mask targets & 30 each & 0.000 & 0.000 & 0 & 0.000\% \\
+\hline
+\end{tabular}
+\end{table}
+
+The MLP results indicate that the MLP policy is less sensitive than GRL to the high-value action-mask targets that dominate the GRL IEEE 123 study. For example, \texttt{action\_mask.Load\_s48} is the strongest GRL exhaustive action-mask target, but it is reported as zero degradation in the MLP paper-facing table. This does not mean the target is physically unimportant; it means that this MLP controller's selected actions do not create the same loss under that observation corruption.
+
+\subsection{IEEE 123-Bus BPSO Action-Mask Criticality}
+\label{subsec:ieee123_bpso_criticality}
+
+The BPSO companion package shows a strong action-mask vulnerability. This is consistent with the BPSO decision model: the optimizer uses the received action mask as an availability constraint. If the attack makes a useful action appear unavailable, BPSO may remove that action from its feasible candidate set before scoring physical restoration outcomes.
+
+The top BPSO action-mask target is \texttt{action\_mask.Load\_s48}, with mean physical degradation 989.312 kWh, maximum degradation 4539.177 kWh, eight damaging cases, 100.000\% detection, and 75.000\% recovery. The largest maximum degradation in the top rows occurs for \texttt{action\_mask.swsec8}, with maximum degradation 5435.308 kWh. Several switch targets are also highly consequential, including \texttt{swsec8}, \texttt{swsec11}, \texttt{swsec4}, \texttt{swtie6}, \texttt{swtie1}, \texttt{swtie9}, and \texttt{swsec7}.
+
+\begin{table*}[t]
+\centering
+\caption{Top IEEE 123-bus BPSO action-mask criticality rows.}
+\label{tab:ieee123_bpso_action_mask_criticality}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Target & Cases & Mean $D$ & Max $D$ & Damaging & Recovery \\
+\hline
+\texttt{action\_mask.Load\_s48} & 30 & 989.312 & 4539.177 & 8 & 75.000\% \\
+\texttt{action\_mask.swsec8} & 27 & 891.733 & 5435.308 & 9 & 77.778\% \\
+\texttt{action\_mask.Load\_s66c} & 30 & 526.202 & 1482.073 & 11 & 72.727\% \\
+\texttt{action\_mask.Load\_s64b} & 30 & 483.928 & 2653.359 & 9 & 55.556\% \\
+\texttt{action\_mask.swsec11} & 30 & 444.426 & 4539.177 & 11 & 81.818\% \\
+\texttt{action\_mask.swsec4} & 27 & 443.604 & 4448.555 & 6 & 83.333\% \\
+\texttt{action\_mask.swtie6} & 30 & 421.418 & 4539.177 & 5 & 100.000\% \\
+\texttt{action\_mask.swtie1} & 30 & 396.339 & 5091.430 & 6 & 100.000\% \\
+\texttt{action\_mask.swtie9} & 30 & 392.853 & 5032.422 & 6 & 100.000\% \\
+\texttt{action\_mask.swsec7} & 30 & 375.121 & 4238.942 & 7 & 71.429\% \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsection{IEEE 123-Bus BPSO Advanced Mitigation}
+\label{subsec:ieee123_bpso_advanced_mitigation}
+
+The BPSO advanced mitigation ablation contains 60 hard cases. The attacked-no-defense and current one-step FDIA-aware variants both leave total residual degradation equal to the total attacked degradation, 58610.708 kWh, with mean residual 976.845 kWh and maximum residual 5490.851 kWh. Four advanced variants recover all of this degradation: all-channel reference only, detector-mitigated only, horizon-screen raw/mitigated, and horizon-screen raw/mitigated/reference. Each of these variants has zero residual degradation, 100.000\% total recovery, and 60 cases improved relative to the current defense.
+
+\begin{table*}[t]
+\centering
+\caption{IEEE 123-bus BPSO advanced mitigation ablation on 60 hard cases.}
+\label{tab:ieee123_bpso_advanced_mitigation}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Variant & Cases & Total attacked $D$ & Total residual $R$ & Max residual $R$ & Recovery \\
+\hline
+\texttt{attacked\_no\_defense} & 60 & 58610.708 & 58610.708 & 5490.851 & 0.000\% \\
+\texttt{current\_one\_step\_fdia\_aware} & 60 & 58610.708 & 58610.708 & 5490.851 & 0.000\% \\
+\texttt{all\_channel\_reference\_only} & 60 & 58610.708 & 0.000 & 0.000 & 100.000\% \\
+\texttt{detector\_mitigated\_only} & 60 & 58610.708 & 0.000 & 0.000 & 100.000\% \\
+\texttt{horizon\_screen\_raw\_mitigated} & 60 & 58610.708 & 0.000 & 0.000 & 100.000\% \\
+\texttt{horizon\_screen\_raw\_mitigated\_reference} & 60 & 58610.708 & 0.000 & 0.000 & 100.000\% \\
+\hline
+\end{tabular}
+\end{table*}
+
+This mitigation result parallels the GRL IEEE 123 advanced mitigation result, but at a larger total-degradation scale. For both GRL and BPSO, the hard cases are not fundamentally unrecoverable. They are failures of the current one-step mitigation design. When the defense is allowed to use detector-mitigated, trusted-reference, or horizon-screened candidates, the restored-energy loss can be eliminated in the ablation set.
+
+\subsection{Comparative Discussion}
+\label{subsec:companion_comparative_discussion}
+
+\subsubsection{Controller-Dependent Vulnerability}
+\label{subsubsec:controller_dependent_vulnerability}
+
+The companion simulations show that vulnerability is controller-dependent. The IEEE 34-bus MLP companion evidence has zero positive paper-facing degradation, while the IEEE 34-bus GRL evidence contains multi-MWh losses under high-impact action/status attacks. In IEEE 123, GRL and MLP share branch-flow hiding as the most damaging baseline family, but GRL has larger mean and maximum degradation and lower baseline mitigation recovery. BPSO, by contrast, is dominated by action-mask false-unavailable attacks because its optimizer treats the received action mask as a hard availability constraint.
+
+\subsubsection{Action-Mask FDIA Is the Most Transferable Risk}
+\label{subsubsec:action_mask_transferability}
+
+Across the controller families, action-mask/status FDIA is the most transferable cyber-physical risk. It is dominant in IEEE 34 GRL criticality, severe in IEEE 123 GRL exhaustive criticality, present but smaller in IEEE 123 MLP, and dominant in scoped IEEE 123 BPSO. The mechanism is direct: corrupting the action mask changes which restoration actions are considered available. This can affect learned policies and optimization-based controllers, although the magnitude depends on the controller's action-selection rule and the attacked target.
+
+\subsubsection{BPSO Scope and Non-Claims}
+\label{subsubsec:bpso_scope_nonclaims}
+
+The BPSO evidence should be framed as scoped action-mask/status evidence. The zero BPSO degradation for branch-flow, voltage, topology, and energy attacks in the controller comparison table should not be interpreted as proof that BPSO is immune to those channels. In the current implementation, those channels are not represented as a rich perceived objective in the same way the action mask is represented as a hard optimizer constraint. A fully comparable BPSO cyber-observation study would need to define how corrupted measurements alter the BPSO objective, candidate feasibility, or physical estimate used for scoring.
+
+\subsubsection{How to Use These Results in the Manuscript}
+\label{subsubsec:companion_results_usage}
+
+The safest manuscript framing is to use GRL as the main controller for the primary claims and present MLP/BPSO as companion evidence. The MLP results support the claim that vulnerability is not solely a feeder property; it depends on the learned controller's observation-to-action map. The BPSO results support the claim that action/status channels are security-critical beyond neural policies, because an optimization-based controller can also be misled when the received action mask is corrupted. The comparison strengthens the paper if the scope distinction is kept explicit.
+

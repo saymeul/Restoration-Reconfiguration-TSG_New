@@ -1,0 +1,209 @@
+{
+  "attack": "stealth_hc",
+  "decision_threshold": 0.5,
+  "detector_type": "separate graph convolutional FDIA classifier",
+  "edge_count": 40,
+  "epochs": 180,
+  "experiment": "IEEE 34-bus graph-learning detector for stealth a=Hc FDIA",
+  "feature_mean": [
+    0.48356378078460693,
+    0.4927806854248047,
+    0.43526166677474976,
+    0.053787875920534134,
+    0.024086637422442436,
+    0.0314771942794323,
+    0.3739544749259949,
+    0.512183666229248,
+    0.5405405163764954
+  ],
+  "feature_std": [
+    0.509524941444397,
+    0.5161303877830505,
+    0.5109534859657288,
+    0.09169263392686844,
+    0.04329749196767807,
+    0.05419221147894859,
+    0.3773294985294342,
+    0.4625570774078369,
+    0.21367456018924713
+  ],
+  "hidden_dim": 48,
+  "important_note": "This is a detector, not the GCAPS/GRL restoration controller. It evaluates whether graph representation learning improves detection of stealth a=Hc measurement attacks that bypass projection-residual BDD.",
+  "measurement_keys": [
+    "NodeFeat(BusVoltage)",
+    "EdgeFeat(Branchflow)",
+    "EnergySupp"
+  ],
+  "node_count": 37,
+  "node_feature_description": [
+    "phase A/B/C bus voltage",
+    "incident branch-flow sum",
+    "incident branch-flow mean",
+    "incident branch-flow max",
+    "energy supplied repeated at each node",
+    "active phase fraction",
+    "normalized node degree"
+  ],
+  "restoration_policy_used_as_detector": false,
+  "subspace_rank": 12,
+  "summary": [
+    {
+      "accuracy": 0.5,
+      "detector": "state_estimator_projection_bdd",
+      "f1": 0.01639344262295082,
+      "false_positive_rate": 0.008333333333333333,
+      "family": "model_based_bdd",
+      "feature_mode": "projection_residual",
+      "fn": 119,
+      "fp": 1,
+      "model": "measurement_subspace_H",
+      "note": "This is the classical a=Hc bypass target; attacks in range(H) should not increase this residual.",
+      "precision": 0.5,
+      "recall_detection_rate": 0.008333333333333333,
+      "samples": 240,
+      "specificity": 0.9916666666666667,
+      "tn": 119,
+      "tp": 1
+    },
+    {
+      "accuracy": 0.9666666666666667,
+      "detector": "legacy_direct_channel_residual_check",
+      "f1": 0.9655172413793104,
+      "false_positive_rate": 0.0,
+      "family": "direct_residual_check",
+      "feature_mode": "direct_clean_vs_received_difference",
+      "fn": 8,
+      "fp": 0,
+      "model": "existing_project_detector",
+      "note": "This uses hidden clean-reference channel differences and is not the classical state-estimation BDD.",
+      "precision": 1.0,
+      "recall_detection_rate": 0.9333333333333333,
+      "samples": 240,
+      "specificity": 1.0,
+      "tn": 120,
+      "tp": 112
+    },
+    {
+      "accuracy": "",
+      "attack_induced_detection_rate": 0.0,
+      "attacked_alarm_rate": 0.008333333333333333,
+      "clean_alarm_rate": 0.008333333333333333,
+      "detector": "state_estimator_projection_bdd_attack_induced",
+      "f1": "",
+      "false_positive_rate": "",
+      "family": "model_based_bdd",
+      "feature_mode": "paired_projection_residual_delta",
+      "fn": "",
+      "fp": "",
+      "max_abs_attack_residual_delta": 2.892408534904689e-12,
+      "mean_attack_residual_delta": 5.345787470097581e-14,
+      "model": "measurement_subspace_H",
+      "note": "For a=Hc stealth, this is the key BDD metric: whether the attack creates a new residual alarm beyond the clean case.",
+      "precision": "",
+      "recall_detection_rate": 0.0,
+      "samples": 120,
+      "specificity": "",
+      "tn": "",
+      "tp": ""
+    },
+    {
+      "accuracy": "",
+      "attack_induced_detection_rate": 0.9333333333333333,
+      "detector": "legacy_direct_channel_residual_attack_induced",
+      "f1": "",
+      "false_positive_rate": "",
+      "family": "direct_residual_check",
+      "feature_mode": "direct_clean_vs_received_difference",
+      "fn": "",
+      "fp": "",
+      "model": "existing_project_detector",
+      "note": "Direct channel comparison sees the changed measurements; this is not the classical SE residual BDD.",
+      "precision": "",
+      "recall_detection_rate": 0.9333333333333333,
+      "samples": 120,
+      "specificity": "",
+      "tn": "",
+      "tp": ""
+    },
+    {
+      "accuracy": 0.9333333333333333,
+      "detector": "graph_learning_gcn_detector",
+      "f1": 0.9322033898305084,
+      "false_positive_rate": 0.05,
+      "family": "graph_learning",
+      "feature_mode": "bus_voltage_incident_flow_graph",
+      "fn": 10,
+      "fp": 6,
+      "model": "two_layer_gcn_global_pool",
+      "precision": 0.9482758620689655,
+      "recall_detection_rate": 0.9166666666666666,
+      "runtime_sec": 21.1560927,
+      "samples": 240,
+      "specificity": 0.95,
+      "test_samples": 240,
+      "tn": 114,
+      "tp": 110,
+      "train_accuracy": 0.9583333333333334,
+      "train_samples": 480
+    }
+  ],
+  "system": "34bus",
+  "test_pairs": 120,
+  "train_pairs": 240,
+  "training_history": [
+    {
+      "epoch": 1,
+      "mean_batch_loss": 0.6924186786015828,
+      "test_loss": 0.6876517534255981,
+      "train_loss": 0.6875622868537903
+    },
+    {
+      "epoch": 25,
+      "mean_batch_loss": 0.2661498804887136,
+      "test_loss": 0.28352364897727966,
+      "train_loss": 0.2551978528499603
+    },
+    {
+      "epoch": 50,
+      "mean_batch_loss": 0.23131656994422276,
+      "test_loss": 0.2596052885055542,
+      "train_loss": 0.2135072499513626
+    },
+    {
+      "epoch": 75,
+      "mean_batch_loss": 0.1876162474354108,
+      "test_loss": 0.23969493806362152,
+      "train_loss": 0.179844468832016
+    },
+    {
+      "epoch": 100,
+      "mean_batch_loss": 0.16266365647315978,
+      "test_loss": 0.23987644910812378,
+      "train_loss": 0.17312495410442352
+    },
+    {
+      "epoch": 125,
+      "mean_batch_loss": 0.1567838231722514,
+      "test_loss": 0.20255617797374725,
+      "train_loss": 0.13302235305309296
+    },
+    {
+      "epoch": 150,
+      "mean_batch_loss": 0.15364885355035465,
+      "test_loss": 0.19777248799800873,
+      "train_loss": 0.13063830137252808
+    },
+    {
+      "epoch": 175,
+      "mean_batch_loss": 0.14503396898508072,
+      "test_loss": 0.17197713255882263,
+      "train_loss": 0.10916001349687576
+    },
+    {
+      "epoch": 180,
+      "mean_batch_loss": 0.13732754588127136,
+      "test_loss": 0.15608757734298706,
+      "train_loss": 0.10922979563474655
+    }
+  ]
+}

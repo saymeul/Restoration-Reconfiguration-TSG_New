@@ -1,0 +1,26 @@
+{
+  "dataset": "C:\\Users\\ISLAS2\\OneDrive - Idaho National Laboratory\\Desktop\\NAPS_Real-Time-Outage-Management-Active-DNR-GRL-v.1.0\\NAPS_adamslab-ub-Real-Time-Outage-Management-Active-DNR-GRL-b715982\\RL_Testing\\13bus\\paper_results\\fdia_learning_dataset_13.npz",
+  "num_samples": 375,
+  "num_features": 11,
+  "feature_mode": "bdd_residuals",
+  "feature_keys": [
+    "voltage_mae_active",
+    "voltage_max_abs",
+    "voltage_changed_fraction",
+    "branchflow_mae",
+    "branchflow_relative_mae",
+    "branchflow_max_abs",
+    "energy_abs",
+    "voltage_violation_abs",
+    "topology_changed_entry_fraction",
+    "topology_changed_edge_fraction",
+    "action_mask_changed_fraction"
+  ],
+  "models": [
+    "centroid",
+    "knn",
+    "linear_torch",
+    "mlp_torch"
+  ],
+  "summary_path": "C:\\Users\\ISLAS2\\OneDrive - Idaho National Laboratory\\Desktop\\NAPS_Real-Time-Outage-Management-Active-DNR-GRL-v.1.0\\NAPS_adamslab-ub-Real-Time-Outage-Management-Active-DNR-GRL-b715982\\RL_Testing\\13bus\\paper_results\\learning_detectors\\model_summary.csv"
+}

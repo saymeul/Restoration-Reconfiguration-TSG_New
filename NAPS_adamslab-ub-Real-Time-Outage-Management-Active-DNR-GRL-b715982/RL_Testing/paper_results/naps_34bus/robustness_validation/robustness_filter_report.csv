@@ -1,0 +1,6 @@
+item,count,details
+raw_trials,750,All Monte Carlo trials before paper-ready filtering
+filtered_trials,605,"convergence_violation <= 0.0, physical_impact_score <= 5.0, abs(energy_ratio) <= 2.0"
+excluded_clean_nonconverged,1,Excluded from filtered statistics; retained in raw CSV
+excluded_energy_ratio_outlier,4,Excluded from filtered statistics; retained in raw CSV
+excluded_nonconverged,140,Excluded from filtered statistics; retained in raw CSV

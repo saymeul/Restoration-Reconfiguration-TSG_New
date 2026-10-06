@@ -1,0 +1,4 @@
+target_observation_id,component_type,component_name,case_count,attack_applied_count,mean_degradation_kwh,max_degradation_kwh,damaging_cases,detection_rate_pct,mitigation_recovery_pct
+action_mask.swsec6,sectionalizing_switch,swsec6,30,29,11.642626,57.066999,11,100.0,90.909091
+action_mask.swsec7,sectionalizing_switch,swsec7,30,30,9.080586,46.844775,14,100.0,100.0
+action_mask.swsec1,sectionalizing_switch,swsec1,30,27,0.0,0.0,0,100.0,0.0

@@ -1,0 +1,17 @@
+{
+  "output": "C:\\Users\\ISLAS2\\OneDrive - Idaho National Laboratory\\Desktop\\NAPS_Real-Time-Outage-Management-Active-DNR-GRL-v.1.0\\NAPS_adamslab-ub-Real-Time-Outage-Management-Active-DNR-GRL-b715982\\RL_Testing\\123bus\\paper_results\\fdia_learning_dataset_123.npz",
+  "samples": 375,
+  "features": 17472,
+  "attack_counts": {
+    "clean": 75,
+    "voltage_masking": 75,
+    "branchflow_hiding": 75,
+    "energy_inflation": 75,
+    "topology_drop": 75
+  },
+  "scenario_counts": {
+    "SC1": 125,
+    "SC2": 125,
+    "random": 125
+  }
+}

@@ -1,0 +1,6 @@
+detector,family,model,accuracy,precision,recall_detection_rate,false_positive_rate,f1,runtime_sec,train_accuracy
+raw_measurement_learning_centroid,raw_measurement_learning,centroid,0.5,0.5,0.5,0.5,0.5,0.0003469000000002609,
+raw_measurement_learning_knn,raw_measurement_learning,knn,0.375,0.4,0.5,0.75,0.4444444444444445,0.0006163000000003471,
+raw_measurement_learning_linear_torch,raw_measurement_learning,linear_torch,0.5416666666666666,0.5294117647058824,0.75,0.6666666666666666,0.6206896551724139,0.019912199999999824,
+raw_measurement_learning_mlp_torch,raw_measurement_learning,mlp_torch,0.5416666666666666,0.6,0.25,0.16666666666666666,0.35294117647058826,0.024354299999999718,
+graph_learning_gcn_detector,graph_learning,two_layer_gcn_global_pool,0.7916666666666666,0.8888888888888888,0.6666666666666666,0.08333333333333333,0.761904761904762,0.2651449000000001,0.8541666666666666

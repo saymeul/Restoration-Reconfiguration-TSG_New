@@ -1,0 +1,12 @@
+{
+  "output": "paper_results\\fdia_learning_smoke.npz",
+  "samples": 8,
+  "features": 17472,
+  "attack_counts": {
+    "clean": 4,
+    "branchflow_hiding": 4
+  },
+  "scenario_counts": {
+    "SC1": 8
+  }
+}

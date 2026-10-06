@@ -1,0 +1,4 @@
+! Compatibility wrapper for PowerBench IEEE 8500 Master.dss.
+! The imported Master.dss redirects LineCodes2.dss, while the dataset ships
+! the definitions as LineCodes.dss.
+Redirect LineCodes.dss

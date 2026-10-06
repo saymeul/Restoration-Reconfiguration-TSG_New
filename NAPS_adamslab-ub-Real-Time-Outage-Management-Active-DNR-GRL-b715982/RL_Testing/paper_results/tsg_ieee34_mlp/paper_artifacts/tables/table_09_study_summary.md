@@ -1,0 +1,15 @@
+# Table 9. IEEE 34 Study Summary
+
+| study_id | row_count | repeat_ranking_diff_count | damaging_rows | top_entity | top_attack_or_corruption | top_mean_physical_degradation_kwh | top_max_physical_degradation_kwh | top_detection_rate | top_bypass_high_impact_rate |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| advanced_defense_learning_stealth_stress | 48 |  | 0 | action_mask.Load_s890;topology_edge.Line.l8;bus_voltage.816 | highimpact_dispatch_s890_line_l8_voltage_816: current_residual:always_reference_screening | 0 | 0 | 1 | 0 |
+| advanced_defense_stealth_stress | 48 |  | 0 | action_mask.Load_s890;topology_edge.Line.l8;bus_voltage.816 | highimpact_dispatch_s890_line_l8_voltage_816: current_residual:always_reference_screening | 0 | 0 | 1 | 0 |
+| attack_family_baseline | 5 |  | 0 | action_mask_false_unavailable | action_mask_false_unavailable | 0 | 0 | 1 | 0 |
+| attack_sensitivity | 25 |  | 0 | action_mask_false_unavailable_L1 | action_mask_false_unavailable: action_mask_false_unavailable_L1 | 0 | 0 | 1 | 0 |
+| branchflow_hide_criticality | 36 |  | 0 | branchflow.Line.l1 | branchflow_hide_to_zero | 0 | 0 | 0.964 | 0 |
+| coordinated_attack_study | 10 |  | 0 | action_mask.Load_s844;action_mask.swtie1 | dispatch_s844_switch_swtie1 | 0 | 0 | 1 | 0 |
+| dispatch_load_false_unavailable_criticality | 10 |  | 0 | action_mask.Load_d808_810sb | dispatch_load_action_mask_false_unavailable | 0 | 0 | 1 | 0 |
+| line_status_false_closed_criticality | 31 |  | 0 | topology_edge.Line.l1 | line_status_false_closed_hidden_outage_adjacency | 0 | 0 | 1 | 0 |
+| line_status_false_open_criticality | 40 |  | 0 | topology_edge.Line.814828 | line_status_false_open_adjacency | 0 | 0 | 1 | 0 |
+| switch_action_mask_criticality | 9 |  | 0 | action_mask.swsec1 | action_mask_false_unavailable_by_named_switch | 0 | 0 | 1 | 0 |
+| voltage_false_low_criticality | 37 |  | 0 | bus_voltage.800 | voltage_false_low_0.80_pu | 0 | 0 | 1 | 0 |

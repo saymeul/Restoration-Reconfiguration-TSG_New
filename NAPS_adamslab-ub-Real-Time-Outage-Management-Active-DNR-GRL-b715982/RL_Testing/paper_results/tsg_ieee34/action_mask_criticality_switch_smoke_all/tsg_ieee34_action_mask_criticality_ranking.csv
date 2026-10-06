@@ -1,0 +1,10 @@
+target_observation_id,target_component_type,target_component_name,target_action_index,case_count,attack_applied_count,attack_applied_rate,mean_restored_energy_loss_kwh,max_restored_energy_loss_kwh,mean_restored_energy_loss_percent,mean_mitigation_recovery_ratio,detection_rate,bypass_high_impact_rate,action_changed_rate,mean_switch_changes_vs_clean,mean_load_changes_vs_clean,criticality_rank
+action_mask.swtie4,tie_switch,swtie4,8,1,1,1.0,16.351416642122103,16.351416642122103,1.537949086283516,1.0,1.0,0.0,1.0,1.0,0.0,1
+action_mask.swsec1,sectionalizing_switch,swsec1,0,1,1,1.0,2.4108155703058856,2.4108155703058856,0.22675170504791314,1.0,1.0,0.0,1.0,1.0,0.0,2
+action_mask.swtie1,tie_switch,swtie1,5,1,1,1.0,2.4097989197011884,2.4097989197011884,0.22665608294355458,1.0,1.0,0.0,1.0,1.0,0.0,3
+action_mask.swsec2,sectionalizing_switch,swsec2,1,1,1,1.0,4.4792614062316716e-11,4.4792614062316716e-11,4.213014772795228e-12,0.0,1.0,0.0,1.0,1.0,0.0,4
+action_mask.swsec3,sectionalizing_switch,swsec3,2,1,1,1.0,4.4792614062316716e-11,4.4792614062316716e-11,4.213014772795228e-12,0.0,1.0,0.0,1.0,1.0,0.0,5
+action_mask.swsec5,sectionalizing_switch,swsec5,4,1,1,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,6
+action_mask.swtie3,tie_switch,swtie3,7,1,1,1.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,7
+action_mask.swsec4,sectionalizing_switch,swsec4,3,1,1,1.0,-1.4763553683944792,-1.4763553683944792,-0.13886010243314167,1.0,1.0,0.0,1.0,1.0,0.0,8
+action_mask.swtie2,tie_switch,swtie2,6,1,1,1.0,-1.476848396850528,-1.476848396850528,-0.13890647472491843,1.0,1.0,0.0,1.0,1.0,0.0,9

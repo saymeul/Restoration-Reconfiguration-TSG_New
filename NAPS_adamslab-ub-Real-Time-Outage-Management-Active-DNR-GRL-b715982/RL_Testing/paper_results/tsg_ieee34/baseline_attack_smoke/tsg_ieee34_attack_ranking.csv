@@ -1,0 +1,2 @@
+attack,case_count,mean_restored_energy_loss_kwh,max_restored_energy_loss_kwh,mean_restored_energy_loss_percent,mean_mitigation_recovery_ratio,detection_rate,bypass_high_impact_rate,mean_attacked_switch_changes_vs_clean,mean_attacked_load_changes_vs_clean,damage_rank
+action_mask_false_unavailable,1,15.952238950358606,15.952238950358606,1.500404023384748,1.0,1.0,0.0,2.0,0.0,1

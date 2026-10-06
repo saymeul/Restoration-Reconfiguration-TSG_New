@@ -1,0 +1,6 @@
+damage_rank,attack,case_count,mean_degradation_kwh,max_degradation_kwh,damaging_cases,damaging_case_rate_pct,mean_accidental_improvement_kwh,detection_rate_pct,mitigation_recovery_pct
+1,action_mask_false_unavailable,30,0.0,0.0,0,0.0,0.0,100.0,0.0
+2,branchflow_hiding,30,0.0,0.0,0,0.0,0.0,96.666667,0.0
+3,energy_inflation,30,0.0,0.0,0,0.0,0.0,100.0,0.0
+4,topology_drop,30,0.0,0.0,0,0.0,0.0,100.0,0.0
+5,voltage_masking,30,0.0,0.0,0,0.0,0.0,100.0,0.0

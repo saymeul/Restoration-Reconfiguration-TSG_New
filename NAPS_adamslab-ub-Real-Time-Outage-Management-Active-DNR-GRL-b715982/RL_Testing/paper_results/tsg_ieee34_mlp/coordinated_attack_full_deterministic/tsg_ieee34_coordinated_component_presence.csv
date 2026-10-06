@@ -1,0 +1,12 @@
+target_observation_id,target_family,target_component_type,target_component_name,component_kind,component_mode,case_count,coordinated_attack_count,coordinated_attack_ids,component_applied_count,component_applied_rate,mean_physical_degradation_kwh,max_physical_degradation_kwh,damaging_case_count,damaging_case_rate,detection_rate,bypass_high_impact_rate,component_presence_rank
+action_mask.Load_s844,action_mask,dispatch_load,Load.s844,action_mask,false_unavailable,60,2,dispatch_s844_switch_swtie1;dispatch_s844_voltage_852,60,1.0,0.0,0.0,0,0.0,1.0,0.0,1
+action_mask.Load_s890,action_mask,dispatch_load,Load.s890,action_mask,false_unavailable,150,5,dispatch_s890_switch_swtie4;dispatch_s890_voltage_816;dispatch_s890_line_l8_voltage_816;hidden_l28_voltage_816_dispatch_s890;dispatch_s890_branchflow_l8_voltage_816,150,1.0,0.0,0.0,0,0.0,1.0,0.0,2
+action_mask.swtie1,action_mask,tie_switch,swtie1,action_mask,false_unavailable,30,1,dispatch_s844_switch_swtie1,30,1.0,0.0,0.0,0,0.0,1.0,0.0,3
+action_mask.swtie4,action_mask,tie_switch,swtie4,action_mask,false_unavailable,90,3,dispatch_s890_switch_swtie4;switch_swtie4_line_l8_voltage_816;hidden_l30_switch_swtie4,90,1.0,0.0,0.0,0,0.0,1.0,0.0,4
+branchflow.Line.l8,branchflow,line,Line.l8,branchflow,hide,30,1,dispatch_s890_branchflow_l8_voltage_816,20,0.6666666666666666,0.0,0.0,0,0.0,1.0,0.0,5
+bus_voltage.816,voltage,bus,816,voltage,false_low,180,6,dispatch_s890_voltage_816;switch_swtie4_line_l8_voltage_816;line_l8_line_824848_voltage_816;dispatch_s890_line_l8_voltage_816;hidden_l28_voltage_816_dispatch_s890;dispatch_s890_branchflow_l8_voltage_816,120,0.6666666666666666,0.0,0.0,0,0.0,1.0,0.0,6
+bus_voltage.852,voltage,bus,852,voltage,false_low,30,1,dispatch_s844_voltage_852,11,0.36666666666666664,0.0,0.0,0,0.0,1.0,0.0,7
+topology_edge.Line.824848,topology,line,Line.824848,line_status,false_open,30,1,line_l8_line_824848_voltage_816,30,1.0,0.0,0.0,0,0.0,1.0,0.0,8
+topology_edge.Line.l28,topology,line,Line.l28,line_status,false_closed,30,1,hidden_l28_voltage_816_dispatch_s890,2,0.06666666666666667,0.0,0.0,0,0.0,1.0,0.0,9
+topology_edge.Line.l30,topology,line,Line.l30,line_status,false_closed,30,1,hidden_l30_switch_swtie4,1,0.03333333333333333,0.0,0.0,0,0.0,1.0,0.0,10
+topology_edge.Line.l8,topology,line,Line.l8,line_status,false_open,90,3,switch_swtie4_line_l8_voltage_816;line_l8_line_824848_voltage_816;dispatch_s890_line_l8_voltage_816,81,0.9,0.0,0.0,0,0.0,1.0,0.0,11

@@ -1,0 +1,81 @@
+{
+  "attack": "bdd_stealth_decision_fdia",
+  "attack_components": [
+    "a=Hc measurement-subspace attack for projection-residual BDD bypass",
+    "false status/action-availability corruption before restoration decision"
+  ],
+  "comparison_rows": 720,
+  "decision_impact_note": "MLP and BPSO impact is attributed to corrupted decision-relevant status/action availability; actions are not edited after the method decides.",
+  "detector_training_summary": [
+    {
+      "accuracy": 0.5166666666666667,
+      "detector": "raw_measurement_learning_centroid",
+      "f1": 0.4912280701754386,
+      "false_positive_rate": 0.43333333333333335,
+      "family": "raw_measurement_learning",
+      "model": "centroid",
+      "precision": 0.5185185185185185,
+      "recall_detection_rate": 0.4666666666666667,
+      "runtime_sec": 0.0008980999999970152
+    },
+    {
+      "accuracy": 0.5125,
+      "detector": "raw_measurement_learning_knn",
+      "f1": 0.29940119760479045,
+      "false_positive_rate": 0.18333333333333332,
+      "family": "raw_measurement_learning",
+      "model": "knn",
+      "precision": 0.5319148936170213,
+      "recall_detection_rate": 0.20833333333333334,
+      "runtime_sec": 0.08059669999999741
+    },
+    {
+      "accuracy": 0.5041666666666667,
+      "detector": "raw_measurement_learning_linear_torch",
+      "f1": 0.5672727272727273,
+      "false_positive_rate": 0.6416666666666667,
+      "family": "raw_measurement_learning",
+      "model": "linear_torch",
+      "precision": 0.5032258064516129,
+      "recall_detection_rate": 0.65,
+      "runtime_sec": 0.39733539999999934
+    },
+    {
+      "accuracy": 0.5083333333333333,
+      "detector": "raw_measurement_learning_mlp_torch",
+      "f1": 0.609271523178808,
+      "false_positive_rate": 0.75,
+      "family": "raw_measurement_learning",
+      "model": "mlp_torch",
+      "precision": 0.5054945054945055,
+      "recall_detection_rate": 0.7666666666666667,
+      "runtime_sec": 2.4041905999999997
+    },
+    {
+      "accuracy": 0.875,
+      "detector": "graph_learning_gcn_detector",
+      "f1": 0.8706896551724138,
+      "false_positive_rate": 0.09166666666666666,
+      "family": "graph_learning",
+      "model": "two_layer_gcn_global_pool",
+      "precision": 0.9017857142857143,
+      "recall_detection_rate": 0.8416666666666667,
+      "runtime_sec": 19.680267200000003,
+      "train_accuracy": 0.925
+    }
+  ],
+  "experiment": "IEEE 34-bus BDD-stealthy decision-aware coordinated FDIA",
+  "horizon": 24,
+  "methods": [
+    "GRL",
+    "MLP",
+    "BPSO"
+  ],
+  "mitigation_included": false,
+  "not_pure_measurement_only": true,
+  "projection_bdd_model": "PCA measurement-subspace proxy H because this repository does not include a full AC WLS state estimator.",
+  "search_rows": 60,
+  "selected_rows": 15,
+  "top_k_per_method": 5,
+  "trials_per_method": 20
+}

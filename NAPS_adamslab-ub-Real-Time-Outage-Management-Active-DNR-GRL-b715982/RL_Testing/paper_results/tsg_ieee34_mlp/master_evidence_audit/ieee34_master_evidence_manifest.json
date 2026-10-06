@@ -1,0 +1,33 @@
+{
+  "attack_surface_row_count": 8,
+  "completed_study_count": 11,
+  "experiment": "IEEE 34 master evidence and observation audit",
+  "generated_at_local": "2026-06-18T11:20:57",
+  "master_evidence_row_count": 299,
+  "missing_inputs": [],
+  "notes": "The audit distinguishes direct current GRL observations from candidate metadata. Load-demand, DER, and fault-status claims should follow this distinction unless the controller observation is changed.",
+  "observation_family_count": 7,
+  "outputs": {
+    "attack_surface_audit": "paper_results\\tsg_ieee34_mlp\\master_evidence_audit\\ieee34_attack_surface_audit.csv",
+    "manifest": "paper_results\\tsg_ieee34_mlp\\master_evidence_audit\\ieee34_master_evidence_manifest.json",
+    "markdown_summary": "paper_results\\tsg_ieee34_mlp\\master_evidence_audit\\IEEE34_Master_Evidence_Audit.md",
+    "master_evidence": "paper_results\\tsg_ieee34_mlp\\master_evidence_audit\\ieee34_master_evidence_table.csv",
+    "observation_family_audit": "paper_results\\tsg_ieee34_mlp\\master_evidence_audit\\ieee34_observation_family_audit.csv",
+    "study_summary": "paper_results\\tsg_ieee34_mlp\\master_evidence_audit\\ieee34_study_summary.csv"
+  },
+  "registry_source": "paper_results\\tsg_ieee34_mlp\\measurement_criticality_voltage_false_low_full\\registries\\ieee34_observation_registry.csv",
+  "repeat_ranking_diff_counts": {
+    "advanced_defense_learning_stealth_stress": "",
+    "advanced_defense_stealth_stress": "",
+    "attack_family_baseline": "",
+    "attack_sensitivity": "",
+    "branchflow_hide_criticality": "",
+    "coordinated_attack_study": "",
+    "dispatch_load_false_unavailable_criticality": "",
+    "line_status_false_closed_criticality": "",
+    "line_status_false_open_criticality": "",
+    "switch_action_mask_criticality": "",
+    "voltage_false_low_criticality": ""
+  },
+  "results_dir": "paper_results\\tsg_ieee34_mlp"
+}

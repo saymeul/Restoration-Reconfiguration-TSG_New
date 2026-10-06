@@ -1,0 +1,6 @@
+label,precision,recall,f1,support
+branchflow_hiding,1.000000,1.000000,1.000000,2
+clean,1.000000,1.000000,1.000000,2
+accuracy,1.000000
+macro_f1,1.000000
+weighted_f1,1.000000

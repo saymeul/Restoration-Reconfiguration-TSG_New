@@ -1,0 +1,11 @@
+{
+  "dataset": "paper_results\\fdia_learning_smoke.npz",
+  "num_samples": 8,
+  "num_features": 17472,
+  "models": [
+    "centroid",
+    "knn",
+    "linear_torch"
+  ],
+  "summary_path": "paper_results\\learning_detectors_smoke\\model_summary.csv"
+}

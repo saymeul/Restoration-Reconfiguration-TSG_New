@@ -1,0 +1,4 @@
+target_method,attack,samples,projection_bdd_attack_induced_rate,projection_bdd_attacked_alarm_rate,legacy_direct_residual_detected_rate,raw_learning_detected_rate,mean_raw_learning_vote_fraction,graph_detector_detected_rate,mean_graph_detector_probability
+BPSO,bdd_stealth_decision_fdia,5,0.0,0.0,1.0,1.0,0.6,1.0,0.8928764343261719
+GRL,bdd_stealth_decision_fdia,5,0.0,0.0,1.0,1.0,0.55,0.8,0.7655372500419617
+MLP,bdd_stealth_decision_fdia,5,0.0,0.0,1.0,1.0,0.65,0.8,0.7088653028011322

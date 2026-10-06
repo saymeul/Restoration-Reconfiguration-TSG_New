@@ -1,0 +1,6 @@
+actual\predicted,branchflow_hiding,clean,energy_inflation,topology_drop,voltage_masking
+branchflow_hiding,17,2,2,0,1
+clean,0,18,3,0,1
+energy_inflation,1,2,17,0,2
+topology_drop,1,14,4,0,3
+voltage_masking,0,1,2,0,19

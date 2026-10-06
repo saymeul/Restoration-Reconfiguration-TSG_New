@@ -1,0 +1,1 @@
+source_study,source_case_id,source_attack_group,scenario_seed,variant,time_step,hour,energy_kw,energy_ratio,voltage_violation,convergence_violation,reward,loads_served,loads_shed

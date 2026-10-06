@@ -1,0 +1,6 @@
+attack,case_count,mean_restored_energy_loss_kwh,max_restored_energy_loss_kwh,mean_restored_energy_loss_percent,mean_physical_degradation_kwh,total_physical_degradation_kwh,max_physical_degradation_kwh,mean_physical_degradation_percent,damaging_case_count,damaging_case_rate,mean_accidental_improvement_kwh,max_accidental_improvement_kwh,improvement_case_count,improvement_case_rate,mean_residual_degradation_after_mitigation_kwh,mean_mitigation_recovery_of_degradation_ratio,mean_mitigation_recovery_of_degradation_ratio_clipped,mean_mitigation_recovery_ratio,detection_rate,bypass_high_impact_rate,mean_attacked_switch_changes_vs_clean,mean_attacked_load_changes_vs_clean,damage_rank
+action_mask_false_unavailable,1,2827.510273680149,2827.510273680149,4.832103971030512,2827.510273680149,2827.510273680149,2827.510273680149,4.832103971030512,1,1.0,0.0,0.0,0,0.0,0.0,1.0,1.0,1.0,1.0,0.0,14.0,12.0,1
+branchflow_hiding,1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,2
+energy_inflation,1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,3
+topology_drop,1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,4
+voltage_masking,1,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0.0,0.0,0.0,0,0.0,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,5

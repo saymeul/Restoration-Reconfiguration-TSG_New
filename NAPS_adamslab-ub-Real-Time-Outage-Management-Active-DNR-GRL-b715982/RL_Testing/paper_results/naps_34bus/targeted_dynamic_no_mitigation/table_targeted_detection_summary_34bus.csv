@@ -1,0 +1,4 @@
+target_method,attack,samples,fdia_detected_rate,bdd_detected_rate,learning_detected_rate,learning_any_detected_rate,mean_learning_vote_fraction,attack_class_correct_rate
+BPSO,topology_drop,5,1.0,1.0,1.0,1.0,1.0,1.0
+GRL,topology_drop,5,1.0,1.0,1.0,1.0,1.0,1.0
+MLP,topology_drop,5,1.0,1.0,1.0,1.0,1.0,1.0

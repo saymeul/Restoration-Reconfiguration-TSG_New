@@ -1,0 +1,60 @@
+evidence_family,attack_definition,target_observation_id,target_component_name,case_count,attack_applied_count,mean_degradation_kwh,max_degradation_kwh,damaging_cases,detection_rate_pct,action_changed_rate_pct,mitigation_recovery_pct,paper_note
+load-control action mask,false unavailable dispatch-load action,action_mask.Load_d808_810sb,Load.d808_810sb,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL load-status/control observation.
+load-control action mask,false unavailable dispatch-load action,action_mask.Load_d816_824sb,Load.d816_824sb,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL load-status/control observation.
+load-control action mask,false unavailable dispatch-load action,action_mask.Load_d818_820sa,Load.d818_820sa,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL load-status/control observation.
+load-control action mask,false unavailable dispatch-load action,action_mask.Load_d824_828sc,Load.d824_828sc,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL load-status/control observation.
+load-control action mask,false unavailable dispatch-load action,action_mask.Load_d828_830sa,Load.d828_830sa,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL load-status/control observation.
+load-control action mask,false unavailable dispatch-load action,action_mask.Load_d832_858rc,Load.d832_858rc,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL load-status/control observation.
+load-control action mask,false unavailable dispatch-load action,action_mask.Load_d854_856sb,Load.d854_856sb,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL load-status/control observation.
+load-control action mask,false unavailable dispatch-load action,action_mask.Load_s844,Load.s844,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL load-status/control observation.
+load-control action mask,false unavailable dispatch-load action,action_mask.Load_s860,Load.s860,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL load-status/control observation.
+load-control action mask,false unavailable dispatch-load action,action_mask.Load_s890,Load.s890,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL load-status/control observation.
+switch action mask,false unavailable switch action,action_mask.swsec1,swsec1,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL switch-status/action availability observation.
+switch action mask,false unavailable switch action,action_mask.swsec2,swsec2,29,29,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL switch-status/action availability observation.
+switch action mask,false unavailable switch action,action_mask.swsec3,swsec3,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL switch-status/action availability observation.
+switch action mask,false unavailable switch action,action_mask.swsec4,swsec4,28,28,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL switch-status/action availability observation.
+switch action mask,false unavailable switch action,action_mask.swsec5,swsec5,24,24,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL switch-status/action availability observation.
+switch action mask,false unavailable switch action,action_mask.swtie1,swtie1,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL switch-status/action availability observation.
+switch action mask,false unavailable switch action,action_mask.swtie2,swtie2,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL switch-status/action availability observation.
+switch action mask,false unavailable switch action,action_mask.swtie3,swtie3,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL switch-status/action availability observation.
+switch action mask,false unavailable switch action,action_mask.swtie4,swtie4,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct current-GRL switch-status/action availability observation.
+line status/topology,false open line-status adjacency,topology_edge.Line.814828,Line.814828,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation.
+line status/topology,false open line-status adjacency,topology_edge.Line.824848,Line.824848,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation.
+line status/topology,false open line-status adjacency,topology_edge.Line.828832,Line.828832,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation.
+line status/topology,false open line-status adjacency,topology_edge.Line.840848,Line.840848,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation.
+line status/topology,false open line-status adjacency,topology_edge.Line.l1,Line.l1,28,28,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation.
+line status/topology,false open line-status adjacency,topology_edge.Line.l10,Line.l10,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation.
+line status/topology,false open line-status adjacency,topology_edge.Line.l11,Line.l11,30,30,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation.
+line status/topology,false open line-status adjacency,topology_edge.Line.l12,Line.l12,27,27,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation.
+line status/topology,false open line-status adjacency,topology_edge.Line.l13,Line.l13,24,24,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation.
+line status/topology,false open line-status adjacency,topology_edge.Line.l14,Line.l14,28,28,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation.
+line status/topology,false closed hidden-outage adjacency,topology_edge.Line.l1,Line.l1,2,2,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation; executable cases are sparse.
+line status/topology,false closed hidden-outage adjacency,topology_edge.Line.l12,Line.l12,3,3,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation; executable cases are sparse.
+line status/topology,false closed hidden-outage adjacency,topology_edge.Line.l13,Line.l13,6,6,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation; executable cases are sparse.
+line status/topology,false closed hidden-outage adjacency,topology_edge.Line.l14,Line.l14,2,2,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation; executable cases are sparse.
+line status/topology,false closed hidden-outage adjacency,topology_edge.Line.l15,Line.l15,7,7,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation; executable cases are sparse.
+line status/topology,false closed hidden-outage adjacency,topology_edge.Line.l16,Line.l16,4,4,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation; executable cases are sparse.
+line status/topology,false closed hidden-outage adjacency,topology_edge.Line.l17,Line.l17,1,1,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation; executable cases are sparse.
+line status/topology,false closed hidden-outage adjacency,topology_edge.Line.l18,Line.l18,2,2,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation; executable cases are sparse.
+line status/topology,false closed hidden-outage adjacency,topology_edge.Line.l2,Line.l2,2,2,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation; executable cases are sparse.
+line status/topology,false closed hidden-outage adjacency,topology_edge.Line.l21,Line.l21,1,1,0.0,0.0,0,100.0,0.0,0.0,Direct topology/status observation; executable cases are sparse.
+bus voltage,false low voltage measurement,bus_voltage.800,800,28,28,0.0,0.0,0,100.0,0.0,0.0,Direct measurement observation.
+bus voltage,false low voltage measurement,bus_voltage.802,802,28,28,0.0,0.0,0,100.0,0.0,0.0,Direct measurement observation.
+bus voltage,false low voltage measurement,bus_voltage.806,806,26,26,0.0,0.0,0,100.0,0.0,0.0,Direct measurement observation.
+bus voltage,false low voltage measurement,bus_voltage.808,808,26,26,0.0,0.0,0,100.0,0.0,0.0,Direct measurement observation.
+bus voltage,false low voltage measurement,bus_voltage.810,810,25,25,0.0,0.0,0,100.0,0.0,0.0,Direct measurement observation.
+bus voltage,false low voltage measurement,bus_voltage.812,812,25,25,0.0,0.0,0,100.0,0.0,0.0,Direct measurement observation.
+bus voltage,false low voltage measurement,bus_voltage.814,814,23,23,0.0,0.0,0,100.0,0.0,0.0,Direct measurement observation.
+bus voltage,false low voltage measurement,bus_voltage.814r,814r,23,23,0.0,0.0,0,100.0,0.0,0.0,Direct measurement observation.
+bus voltage,false low voltage measurement,bus_voltage.816,816,20,20,0.0,0.0,0,100.0,0.0,0.0,Direct measurement observation.
+bus voltage,false low voltage measurement,bus_voltage.818,818,18,18,0.0,0.0,0,100.0,0.0,0.0,Direct measurement observation.
+branch flow,hide branchflow to zero,branchflow.Line.l1,Line.l1,28,28,0.0,0.0,0,96.428571,0.0,0.0,Standalone branchflow hiding was not physically damaging in this grid.
+branch flow,hide branchflow to zero,branchflow.Line.l10,Line.l10,20,20,0.0,0.0,0,0.0,0.0,0.0,Standalone branchflow hiding was not physically damaging in this grid.
+branch flow,hide branchflow to zero,branchflow.Line.l11,Line.l11,20,20,0.0,0.0,0,0.0,0.0,0.0,Standalone branchflow hiding was not physically damaging in this grid.
+branch flow,hide branchflow to zero,branchflow.Line.l12,Line.l12,20,20,0.0,0.0,0,0.0,0.0,0.0,Standalone branchflow hiding was not physically damaging in this grid.
+branch flow,hide branchflow to zero,branchflow.Line.l13,Line.l13,22,22,0.0,0.0,0,31.818182,0.0,0.0,Standalone branchflow hiding was not physically damaging in this grid.
+branch flow,hide branchflow to zero,branchflow.Line.l14,Line.l14,20,20,0.0,0.0,0,30.0,0.0,0.0,Standalone branchflow hiding was not physically damaging in this grid.
+branch flow,hide branchflow to zero,branchflow.Line.l15,Line.l15,17,17,0.0,0.0,0,23.529412,0.0,0.0,Standalone branchflow hiding was not physically damaging in this grid.
+branch flow,hide branchflow to zero,branchflow.Line.l16,Line.l16,12,12,0.0,0.0,0,0.0,0.0,0.0,Standalone branchflow hiding was not physically damaging in this grid.
+branch flow,hide branchflow to zero,branchflow.Line.l17,Line.l17,7,7,0.0,0.0,0,0.0,0.0,0.0,Standalone branchflow hiding was not physically damaging in this grid.
+branch flow,hide branchflow to zero,branchflow.Line.l18,Line.l18,8,8,0.0,0.0,0,0.0,0.0,0.0,Standalone branchflow hiding was not physically damaging in this grid.

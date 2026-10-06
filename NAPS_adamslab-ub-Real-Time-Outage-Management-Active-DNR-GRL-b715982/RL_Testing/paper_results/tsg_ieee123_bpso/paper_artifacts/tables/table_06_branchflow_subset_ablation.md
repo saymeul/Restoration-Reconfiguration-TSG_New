@@ -1,0 +1,4 @@
+# Table 6. IEEE 123 Coordinated Branchflow Subset Ablation
+
+| subset_k | case_count | mean_selected_count | total_degradation_kwh | mean_degradation_kwh | max_degradation_kwh | damaging_cases | total_baseline_reproduction_pct | detection_rate_pct | mitigation_recovery_pct |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

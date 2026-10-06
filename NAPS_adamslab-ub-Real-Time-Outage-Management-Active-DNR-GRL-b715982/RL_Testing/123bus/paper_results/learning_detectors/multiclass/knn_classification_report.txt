@@ -1,0 +1,9 @@
+label,precision,recall,f1,support
+branchflow_hiding,0.894737,0.772727,0.829268,22
+clean,0.486486,0.818182,0.610169,22
+energy_inflation,0.607143,0.772727,0.680000,22
+topology_drop,0.000000,0.000000,0.000000,22
+voltage_masking,0.730769,0.863636,0.791667,22
+accuracy,0.645455
+macro_f1,0.582221
+weighted_f1,0.582221

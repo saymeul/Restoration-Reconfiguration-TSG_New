@@ -1,0 +1,7 @@
+subset_k,case_count,mean_selected_count,total_degradation_kwh,mean_degradation_kwh,max_degradation_kwh,damaging_cases,total_baseline_reproduction_pct,detection_rate_pct,mitigation_recovery_pct
+1,2,1.0,0.0,0.0,0.0,0,0.0,50.0,0.0
+2,2,2.0,829.459799,414.729899,829.459799,1,50.778591,100.0,100.0
+3,2,3.0,1633.483299,816.741649,829.459799,2,100.0,100.0,100.0
+5,2,5.0,1633.483299,816.741649,829.459799,2,100.0,100.0,100.0
+10,2,10.0,1633.483299,816.741649,829.459799,2,100.0,100.0,100.0
+full,2,27.0,1633.483299,816.741649,829.459799,2,100.0,100.0,100.0

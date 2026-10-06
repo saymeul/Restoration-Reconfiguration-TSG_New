@@ -1,0 +1,12 @@
+attack_id,family,target_families,observation_keys,implemented_now,description,paper_role
+topology_drop,topology_status,topology,Adjacency,1,Remove existing graph edges from the controller's perceived topology.,Current NAPS topology/status FDIA baseline.
+action_mask_false_unavailable,topology_status,action_mask,ActionMasking,1,Mark physically available switch/load actions as unavailable to the controller.,Decision-channel topology/status attack.
+line_status_false_open,topology_status,topology,Adjacency,1,Report an observed connected line as open/unavailable to the controller.,Named line-status false-open criticality attack.
+line_status_false_closed,topology_status,topology,Adjacency,1,Report an observed open/outage line as connected to the controller.,Named hidden-outage line-status criticality attack.
+fault_status_hidden,fault_status,topology;action_mask,Adjacency;ActionMasking,0,Hide a faulted/outage line from the controller's perceived status.,Fault-masking attack for unsafe restoration analysis.
+fault_status_false_alarm,fault_status,topology;action_mask,Adjacency;ActionMasking,0,Report a healthy line or switch as faulted/unavailable.,False isolation attack for restored-energy loss analysis.
+voltage_bias,measurement,voltage,NodeFeat(BusVoltage),1,Bias or mask bus-voltage observations seen by the controller.,Measurement FDIA baseline and weak-bus criticality test.
+branchflow_hiding,measurement,branchflow,EdgeFeat(Branchflow),1,Underreport heavily loaded branch-flow/current observations.,Measurement FDIA baseline for overload-risk analysis.
+load_demand_bias,measurement,load,,0,Bias load demand or priority information used by restoration decisions.,TSG extension requiring explicit load observation channel or estimator.
+der_availability_flip,der_status,der,,0,Flip DER availability/capacity status used for islanding/restoration decisions.,TSG extension requiring explicit DER observation channel or estimator.
+coordinated_topology_measurement,coordinated,topology;action_mask;voltage;branchflow,Adjacency;ActionMasking;NodeFeat(BusVoltage);EdgeFeat(Branchflow),1,"Combine topology/status, action-mask, voltage, and branchflow observation corruption in curated IEEE 34 attack and defense-stress cases.",Completed high-impact coordinated attack family with IEEE 34 detector/mitigation and stealth-stress variants.

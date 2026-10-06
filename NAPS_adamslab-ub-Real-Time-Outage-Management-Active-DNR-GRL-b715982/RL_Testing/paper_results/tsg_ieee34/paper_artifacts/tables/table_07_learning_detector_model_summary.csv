@@ -1,0 +1,9 @@
+task,model,accuracy_pct,macro_f1_pct,weighted_f1_pct
+binary,knn,100.0,100.0,100.0
+binary,linear_torch,100.0,100.0,100.0
+binary,mlp_torch,100.0,100.0,100.0
+binary,centroid,82.142857,78.125,83.816964
+multiclass,knn,100.0,100.0,100.0
+multiclass,linear_torch,100.0,100.0,100.0
+multiclass,mlp_torch,100.0,100.0,100.0
+multiclass,centroid,82.727273,84.18905,84.18905

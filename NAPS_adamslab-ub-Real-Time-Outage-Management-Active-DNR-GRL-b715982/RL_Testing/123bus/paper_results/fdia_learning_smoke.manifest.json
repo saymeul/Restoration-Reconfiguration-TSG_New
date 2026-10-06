@@ -1,0 +1,39 @@
+{
+  "feature_keys": [
+    "EnergySupp",
+    "NodeFeat(BusVoltage)",
+    "EdgeFeat(Branchflow)",
+    "Adjacency",
+    "VoltageViolation",
+    "ConvergenceViolation",
+    "ActionMasking"
+  ],
+  "num_features": 17472,
+  "feature_names_preview": [
+    "EnergySupp_0",
+    "NodeFeat(BusVoltage)_0",
+    "NodeFeat(BusVoltage)_1",
+    "NodeFeat(BusVoltage)_2",
+    "NodeFeat(BusVoltage)_3",
+    "NodeFeat(BusVoltage)_4",
+    "NodeFeat(BusVoltage)_5",
+    "NodeFeat(BusVoltage)_6",
+    "NodeFeat(BusVoltage)_7",
+    "NodeFeat(BusVoltage)_8",
+    "NodeFeat(BusVoltage)_9",
+    "NodeFeat(BusVoltage)_10",
+    "NodeFeat(BusVoltage)_11",
+    "NodeFeat(BusVoltage)_12",
+    "NodeFeat(BusVoltage)_13",
+    "NodeFeat(BusVoltage)_14",
+    "NodeFeat(BusVoltage)_15",
+    "NodeFeat(BusVoltage)_16",
+    "NodeFeat(BusVoltage)_17",
+    "NodeFeat(BusVoltage)_18",
+    "NodeFeat(BusVoltage)_19",
+    "NodeFeat(BusVoltage)_20",
+    "NodeFeat(BusVoltage)_21",
+    "NodeFeat(BusVoltage)_22",
+    "NodeFeat(BusVoltage)_23"
+  ]
+}

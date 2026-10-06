@@ -1,0 +1,602 @@
+% Mathematical modeling section for an IEEE Transactions on Smart Grid manuscript.
+% Intended use after the Introduction/Related Work section:
+% \input{sections/02_mathematical_model}
+
+\section{Mathematical Model and Problem Formulation}
+\label{sec:mathematical_model}
+
+This section formalizes the distribution restoration problem, the GRL controller observation model, the observation-level false-data injection attack (FDIA) model, and the detection/mitigation metrics used in the IEEE 34-bus and IEEE 123-bus studies. The formulation is intentionally aligned with the experimental workflow: the attacker corrupts only the cyber observation received by the controller, whereas the clean, attacked, and mitigated actions are evaluated on the same physical OpenDSS feeder state.
+
+\subsection{Distribution Feeder and Physical State}
+\label{subsec:feeder_model}
+
+Let the distribution feeder be represented by a graph
+\begin{equation}
+    \mathcal{G} = (\mathcal{N},\mathcal{E}),
+\end{equation}
+where $\mathcal{N}$ is the set of buses and $\mathcal{E}$ is the set of distribution lines, switches, transformers, and other branch elements represented in the controller graph. For an unbalanced distribution feeder, each bus $i \in \mathcal{N}$ may have an active phase set $\Phi_i \subseteq \{a,b,c\}$, and each edge $e=(i,j) \in \mathcal{E}$ may have a phase set $\Phi_e$.
+
+The physical feeder state at restoration step $t$ is denoted by
+\begin{equation}
+    x_t =
+    \left(
+        V_t,\,
+        I_t,\,
+        P_t,\,
+        Q_t,\,
+        z_t,\,
+        \ell_t,\,
+        \omega
+    \right),
+\end{equation}
+where $V_t$ is the vector of bus voltages, $I_t$ is the vector of branch-current or branch-flow quantities, $P_t$ and $Q_t$ are real and reactive power quantities, $z_t$ contains switch and topology status variables, $\ell_t$ contains load service or controllable-load status variables, and $\omega$ denotes the outage scenario, including outaged edges, loadshape information, and other exogenous conditions. In the experiments, $x_t$ is not directly optimized in closed form; it is advanced and evaluated through OpenDSS.
+
+The restoration action at step $t$ is a binary vector
+\begin{equation}
+    a_t \in \{0,1\}^{n_a},
+\end{equation}
+where entries correspond to controllable switch and load-restoration decisions exposed by the restoration environment. Let $\mathcal{A}(x_t)$ denote the physically feasible action set under the true feeder state. Feasibility includes operational constraints such as topology consistency, unavailable components, voltage and thermal feasibility, and any environment-specific action constraints.
+
+The physical transition is written abstractly as
+\begin{equation}
+    x_{t+1} = f_{\mathrm{DSS}}(x_t,a_t,\omega_t),
+    \label{eq:physical_transition}
+\end{equation}
+where $f_{\mathrm{DSS}}(\cdot)$ denotes the OpenDSS-backed transition and power-flow evaluation. Equation \eqref{eq:physical_transition} emphasizes that the physical feeder state evolves according to the true outage scenario and selected action, not according to the attacker's corrupted observation.
+
+\subsection{Restoration Objective and Energy Metric}
+\label{subsec:restoration_objective}
+
+Let $p^{\mathrm{srv}}_{i,t}(x_t)$ denote the real power served at load bus or load component $i$ during restoration step $t$. For a restoration horizon of $T$ steps and step duration $\Delta t$, the restored energy of a trajectory $\tau = (x_0,a_0,x_1,\ldots,x_T)$ is
+\begin{equation}
+    E(\tau)
+    =
+    \Delta t
+    \sum_{t=0}^{T-1}
+    \sum_{i \in \mathcal{L}}
+    p^{\mathrm{srv}}_{i,t}(x_t),
+    \label{eq:restored_energy}
+\end{equation}
+where $\mathcal{L}$ is the set of load components included in the restoration metric. The experiments report $E(\tau)$ in kWh.
+
+A restoration policy seeks to maximize expected restored energy, possibly with penalties for voltage violations, thermal violations, invalid actions, or switching costs. A generic policy objective can be written as
+\begin{equation}
+    \max_{\pi}
+    J(\pi)
+    =
+    \mathbb{E}_{\omega}
+    \left[
+        \sum_{t=0}^{T-1}
+        r(x_t,a_t,\omega_t)
+    \right],
+    \qquad
+    a_t \sim \pi(\cdot \mid o_t),
+    \label{eq:policy_objective}
+\end{equation}
+where $r(\cdot)$ is the controller training reward and $o_t$ is the controller observation. The paper's evaluation metric is not the training reward itself; it is restored-energy degradation computed from \eqref{eq:restored_energy}.
+
+\subsection{Controller Observation and GRL Policy}
+\label{subsec:observation_policy}
+
+The restoration controller does not observe the full physical state $x_t$ directly. Instead, it receives a structured observation
+\begin{equation}
+    o_t = h(x_t)
+    =
+    \left(
+        X_t,\,
+        B_t,\,
+        g_t,\,
+        m_t
+    \right),
+    \label{eq:observation}
+\end{equation}
+where $X_t$ contains node features, $B_t$ contains edge or branch features, $g_t$ contains global restoration scalars, and $m_t \in \{0,1\}^{n_a}$ is an action/status availability mask. In the studied controller, the direct observation families include bus-voltage measurements, branch-flow measurements, topology/status features, action/status masks, and global scalar features.
+
+The action mask defines a controller-level availability set
+\begin{equation}
+    \mathcal{A}_m(o_t)
+    =
+    \left\{
+        a \in \{0,1\}^{n_a}
+        \;:\;
+        a_j \leq m_{t,j},
+        \; j=1,\ldots,n_a
+    \right\},
+    \label{eq:mask_feasible_set}
+\end{equation}
+for action components whose convention is that $m_{t,j}=0$ marks action $j$ unavailable. The exact environment action semantics may include additional constraints, but \eqref{eq:mask_feasible_set} captures why action/status FDIA can be highly consequential: a false-unavailable mask entry can remove a useful restoration action before the learned policy selects an action.
+
+A trained GRL policy is denoted by
+\begin{equation}
+    a_t^{0} = \pi_{\theta}(o_t),
+    \label{eq:clean_action}
+\end{equation}
+where $a_t^{0}$ is the clean action selected from the uncorrupted observation. In deterministic evaluation, $\pi_{\theta}$ denotes the policy's deployed action-selection rule. For companion controller studies, the same notation also applies to non-GRL policies such as MLP controllers, with a different parameterization of $\pi_{\theta}$.
+
+\subsection{Observation-Level FDIA Model}
+\label{subsec:fdia_model}
+
+An observation-level FDIA is modeled as an attack operator
+\begin{equation}
+    \tilde{o}_t = \mathcal{A}_{\eta}(o_t),
+    \label{eq:attack_operator}
+\end{equation}
+where $\eta$ specifies the attack family, target observation indices, and attack magnitude or replacement rule. The attacked action is
+\begin{equation}
+    a_t^{\eta} = \pi_{\theta}(\tilde{o}_t).
+    \label{eq:attacked_action}
+\end{equation}
+The physical feeder state remains $x_t$. Thus, $\tilde{o}_t$ affects the controller's selected action, but the action is evaluated on the true feeder through \eqref{eq:physical_transition}.
+
+Let $\mathcal{S}_{\eta}$ be the set of observation channels modified by the attack. The attacks studied in the evidence packages are structured as follows.
+
+\subsubsection{Action/Status Mask Attack}
+
+A false-unavailable action-mask attack changes one or more availability-mask entries from available to unavailable:
+\begin{equation}
+    \tilde{m}_{t,j}
+    =
+    \begin{cases}
+        0, & j \in \mathcal{S}_{\eta}^{m},\\
+        m_{t,j}, & j \notin \mathcal{S}_{\eta}^{m}.
+    \end{cases}
+    \label{eq:action_mask_attack}
+\end{equation}
+This attack is a direct controller-observation attack because the action mask is consumed by the restoration policy. It is especially important when target $j$ corresponds to a load-restoration or switching action that is critical for reconnecting high-value load.
+
+\subsubsection{Topology/Status Attack}
+
+Let $A_t$ denote a topology or adjacency-status representation used in the graph observation. A false-open topology attack sets selected observed edges to open:
+\begin{equation}
+    \tilde{A}_{t,ij} = 0,
+    \qquad
+    (i,j) \in \mathcal{S}_{\eta}^{A},
+    \label{eq:false_open_attack}
+\end{equation}
+whereas a false-closed hidden-outage attack sets selected observed edges to closed:
+\begin{equation}
+    \tilde{A}_{t,ij} = 1,
+    \qquad
+    (i,j) \in \mathcal{S}_{\eta}^{A}.
+    \label{eq:false_closed_attack}
+\end{equation}
+The physical edge status in OpenDSS is not changed by \eqref{eq:false_open_attack} or \eqref{eq:false_closed_attack}; only the graph observation received by the controller is changed.
+
+\subsubsection{Voltage Measurement Attack}
+
+Let $v_{i,\phi,t}$ be the per-unit voltage magnitude for bus $i$ and phase $\phi$. A false-low voltage attack replaces selected active-phase voltage entries with a reported value $v^{\mathrm{low}}$:
+\begin{equation}
+    \tilde{v}_{i,\phi,t}
+    =
+    v^{\mathrm{low}},
+    \qquad
+    (i,\phi) \in \mathcal{S}_{\eta}^{V}.
+    \label{eq:voltage_attack}
+\end{equation}
+The experiments use this structure to test whether the policy changes restoration decisions when the cyber observation reports artificially low voltage.
+
+\subsubsection{Branch-Flow Hiding Attack}
+
+Let $b_{e,t}$ be the branch-flow or branch-loading feature for edge $e$. A branch-flow hiding attack suppresses selected branch-flow observations:
+\begin{equation}
+    \tilde{b}_{e,t}
+    =
+    \alpha_b b_{e,t},
+    \qquad
+    e \in \mathcal{S}_{\eta}^{B},
+    \label{eq:branchflow_attack}
+\end{equation}
+where $\alpha_b = 0$ gives full hiding. IEEE 123 results show that coordinated branch-flow hiding can be damaging even when individual branch-flow targets are weak.
+
+\subsubsection{Global Scalar Attack}
+
+For a global scalar feature $g_{r,t}$, an additive or multiplicative scalar attack can be written as
+\begin{equation}
+    \tilde{g}_{r,t}
+    =
+    \alpha_g g_{r,t} + \beta_g,
+    \qquad
+    r \in \mathcal{S}_{\eta}^{g}.
+    \label{eq:global_scalar_attack}
+\end{equation}
+In the current evidence, these attacks are included only for scalar observations actually available to the controller.
+
+\subsection{Clean, Attacked, and Mitigated Trajectories}
+\label{subsec:trajectories}
+
+For an outage scenario $\omega$, define the clean trajectory
+\begin{equation}
+    \tau^{0}(\omega)
+    =
+    \left(
+        x^{0}_0,a^{0}_0,x^{0}_1,\ldots,x^{0}_T
+    \right),
+    \qquad
+    a^{0}_t = \pi_{\theta}(h(x^{0}_t)).
+    \label{eq:clean_trajectory}
+\end{equation}
+The attacked trajectory is
+\begin{equation}
+    \tau^{\eta}(\omega)
+    =
+    \left(
+        x^{\eta}_0,a^{\eta}_0,x^{\eta}_1,\ldots,x^{\eta}_T
+    \right),
+    \qquad
+    a^{\eta}_t = \pi_{\theta}(\mathcal{A}_{\eta}(h(x^{\eta}_t))).
+    \label{eq:attacked_trajectory}
+\end{equation}
+The mitigated trajectory is
+\begin{equation}
+    \tau^{M}(\omega)
+    =
+    \left(
+        x^{M}_0,a^{M}_0,x^{M}_1,\ldots,x^{M}_T
+    \right),
+    \qquad
+    a^{M}_t = \mu_{\psi}(h(x^{M}_t),\tilde{o}^{M}_t,d_t),
+    \label{eq:mitigated_trajectory}
+\end{equation}
+where $\mu_{\psi}$ is the defense action-selection rule, $\tilde{o}^{M}_t$ is the potentially attacked or sanitized observation available to the mitigation layer, and $d_t \in \{0,1\}$ is the detector decision. In the experiments, the clean, attacked, and mitigated trajectories for the same case are evaluated under the same outage-edge scenario and loadshape schedule.
+
+\subsection{Physical Degradation and Recovery Metrics}
+\label{subsec:metrics}
+
+Let
+\begin{equation}
+    E^0 = E(\tau^0), \qquad
+    E^{\eta} = E(\tau^{\eta}), \qquad
+    E^{M} = E(\tau^{M})
+\end{equation}
+be the clean, attacked, and mitigated restored energies for the same scenario. The restored-energy loss caused by the attack is
+\begin{equation}
+    L^{\eta} = E^0 - E^{\eta}.
+    \label{eq:loss_raw}
+\end{equation}
+Because an attack can occasionally improve the restoration outcome by chance, the paper reports positive physical degradation as
+\begin{equation}
+    D^{\eta}
+    =
+    \max\left(0, E^0 - E^{\eta}\right).
+    \label{eq:physical_degradation}
+\end{equation}
+The corresponding accidental improvement is
+\begin{equation}
+    I^{\eta}
+    =
+    \max\left(0, E^{\eta} - E^0\right).
+    \label{eq:accidental_improvement}
+\end{equation}
+
+Residual degradation after mitigation is
+\begin{equation}
+    R^{M}
+    =
+    \max\left(0, E^0 - E^{M}\right).
+    \label{eq:residual_degradation}
+\end{equation}
+The degradation recovered by mitigation is
+\begin{equation}
+    G^{M}
+    =
+    D^{\eta} - R^{M}.
+    \label{eq:degradation_recovered}
+\end{equation}
+For $D^{\eta} > \epsilon$, the clipped recovery ratio is
+\begin{equation}
+    \rho^{M}
+    =
+    \operatorname{clip}
+    \left(
+        \frac{D^{\eta}-R^{M}}{D^{\eta}},
+        0,
+        1
+    \right),
+    \label{eq:recovery_ratio}
+\end{equation}
+and $\rho^{M}=0$ when $D^{\eta}\leq \epsilon$. The clipping prevents accidental over-recovery or numerical artifacts from being interpreted as more than full recovery.
+
+For a set of cases $\Omega$ and attack family $\eta$, the mean degradation, total degradation, and damaging-case rate are
+\begin{align}
+    \bar{D}_{\eta}
+    &=
+    \frac{1}{|\Omega|}
+    \sum_{\omega \in \Omega}
+    D^{\eta}(\omega),\\
+    D_{\eta}^{\mathrm{tot}}
+    &=
+    \sum_{\omega \in \Omega}
+    D^{\eta}(\omega),\\
+    r_{\eta}^{\mathrm{dmg}}
+    &=
+    \frac{1}{|\Omega|}
+    \sum_{\omega \in \Omega}
+    \mathbf{1}
+    \left[
+        D^{\eta}(\omega) > \epsilon
+    \right].
+    \label{eq:aggregate_metrics}
+\end{align}
+
+\subsection{Detection Model}
+\label{subsec:detection_model}
+
+The detector maps an observation and optional reference information to a binary decision:
+\begin{equation}
+    d_t = \mathcal{D}_{\gamma}(\tilde{o}_t,\mathcal{R}_t)
+    \in \{0,1\},
+    \label{eq:detector}
+\end{equation}
+where $\gamma$ denotes the detector profile and $\mathcal{R}_t$ denotes available reference or consistency information. A generic residual detector computes channel residuals
+\begin{equation}
+    r_{k,t}
+    =
+    \left|
+        \tilde{y}_{k,t}
+        -
+        \hat{y}_{k,t}
+    \right|,
+    \qquad
+    k \in \mathcal{K},
+    \label{eq:residuals}
+\end{equation}
+where $\tilde{y}_{k,t}$ is an observed channel and $\hat{y}_{k,t}$ is a reference, predicted, or consistency-implied value. The normalized detector score can be written as
+\begin{equation}
+    s_t
+    =
+    \max_{k \in \mathcal{K}}
+    \frac{r_{k,t}}{\tau_k},
+    \label{eq:detector_score}
+\end{equation}
+with thresholds $\tau_k>0$. The residual detector flags when
+\begin{equation}
+    d_t^{\mathrm{res}}
+    =
+    \mathbf{1}
+    \left[
+        s_t > 1
+    \right].
+    \label{eq:residual_detector}
+\end{equation}
+
+Status-integrity checks are used for binary action/status and topology/status observations. Let $\mathcal{B}$ be a set of binary channels and $\mathcal{C}_{\mathrm{stat}}$ be the set of expected logical consistency constraints among status, topology, and action-mask entries. A generic status-integrity detector is
+\begin{equation}
+    d_t^{\mathrm{stat}}
+    =
+    \mathbf{1}
+    \left[
+        \exists c \in \mathcal{C}_{\mathrm{stat}}
+        :
+        c(\tilde{o}_t) = 0
+    \right].
+    \label{eq:status_detector}
+\end{equation}
+The strict profile uses stronger status-integrity assumptions, while the relaxed profile weakens or removes selected binary-status checks to stress-test stealth behavior.
+
+The deployed detector decision is represented as
+\begin{equation}
+    d_t
+    =
+    d_t^{\mathrm{res}}
+    \lor
+    d_t^{\mathrm{stat}}
+    \lor
+    d_t^{\mathrm{learn}},
+    \label{eq:fused_detector}
+\end{equation}
+where $d_t^{\mathrm{learn}}$ is included only in learning-detector ablations. The learning detector does not replace the physical residual/status checks in the main evidence; it is evaluated as an additional detection signal.
+
+For a case-level attack, detection is reported as
+\begin{equation}
+    d(\omega)
+    =
+    \mathbf{1}
+    \left[
+        \max_{t=0,\ldots,T-1} d_t = 1
+    \right].
+    \label{eq:case_detection}
+\end{equation}
+The detection rate for attack family $\eta$ is
+\begin{equation}
+    r_{\eta}^{\mathrm{det}}
+    =
+    \frac{1}{|\Omega|}
+    \sum_{\omega \in \Omega}
+    d(\omega).
+    \label{eq:detection_rate}
+\end{equation}
+Detection on damaging cases is computed by restricting the denominator to cases with $D^{\eta}(\omega)>\epsilon$.
+
+\subsection{Bypass and Stealth Metrics}
+\label{subsec:bypass_model}
+
+A high-impact bypass occurs when an attack is physically damaging but is not detected:
+\begin{equation}
+    b^{\eta}(\omega)
+    =
+    \mathbf{1}
+    \left[
+        D^{\eta}(\omega) > \epsilon_D
+        \;\land\;
+        d(\omega)=0
+    \right],
+    \label{eq:bypass_indicator}
+\end{equation}
+where $\epsilon_D$ is the degradation threshold used to define high-impact damage. The bypass rate is
+\begin{equation}
+    r_{\eta}^{\mathrm{bypass}}
+    =
+    \frac{1}{|\Omega|}
+    \sum_{\omega \in \Omega}
+    b^{\eta}(\omega).
+    \label{eq:bypass_rate}
+\end{equation}
+For stealth-stress experiments, the same structure is used with attack-specific stealth intent. A stealth success is a case in which the attack remains below the chosen detection criterion while retaining the intended physical effect.
+
+\subsection{Mitigation as Candidate Action Screening}
+\label{subsec:mitigation_model}
+
+After detection, mitigation is formulated as candidate action screening. Let
+\begin{equation}
+    \mathcal{C}_t
+    =
+    \left\{
+        a_t^{(1)},a_t^{(2)},\ldots,a_t^{(q)}
+    \right\}
+    \label{eq:candidate_set}
+\end{equation}
+be a set of candidate restoration actions. Candidate sources may include:
+\begin{align}
+    a_t^{\eta} &= \pi_{\theta}(\tilde{o}_t),
+    &&\text{attacked-observation policy action},\\
+    a_t^{\mathrm{mit}} &= \pi_{\theta}(o_t^{\mathrm{mit}}),
+    &&\text{detector-mitigated observation action},\\
+    a_t^{\mathrm{ref}} &= \pi_{\theta}(o_t^{\mathrm{ref}}),
+    &&\text{trusted-reference observation action}.
+    \label{eq:candidate_sources}
+\end{align}
+The trusted-reference candidate is a robust benchmark candidate in the current evidence. It should not be described as a free replacement for detection, because it assumes access to a reference or screened observation source.
+
+Given a candidate action $a \in \mathcal{C}_t$, define a screening score
+\begin{equation}
+    \widehat{Q}_t(a)
+    =
+    \widehat{E}_t(a)
+    -
+    \lambda_V \widehat{\nu}_t(a)
+    -
+    \lambda_S \widehat{s}_t(a),
+    \label{eq:screening_score}
+\end{equation}
+where $\widehat{E}_t(a)$ is the estimated restored-energy contribution or rollout value, $\widehat{\nu}_t(a)$ is an estimated voltage or constraint-violation penalty, $\widehat{s}_t(a)$ is an optional switching or operational penalty, and $\lambda_V,\lambda_S \geq 0$ are weights. In the experiments, candidate quality is evaluated using the same physical scenario for clean, attacked, and mitigated comparisons; in an online deployment, \eqref{eq:screening_score} would be computed from a trusted state estimator, digital twin, or reference-screened model.
+
+The selected mitigated action is
+\begin{equation}
+    a_t^{M}
+    =
+    \arg\max_{a \in \mathcal{C}_t}
+    \widehat{Q}_t(a).
+    \label{eq:mitigated_action}
+\end{equation}
+
+\subsubsection{Gated Candidate Screening}
+
+In gated screening, mitigation is applied only if the detector gate is active:
+\begin{equation}
+    a_t^{M}
+    =
+    \begin{cases}
+        \displaystyle
+        \arg\max_{a \in \mathcal{C}_t^{\mathrm{gate}}}
+        \widehat{Q}_t(a),
+        & d_t=1,\\[2mm]
+        a_t^{\eta},
+        & d_t=0.
+    \end{cases}
+    \label{eq:gated_screening}
+\end{equation}
+This mode can fail when the detector misses a damaging attack or when the gated candidate set does not include a sufficiently good reference action.
+
+\subsubsection{Always-Reference Screening}
+
+In always-reference screening, the candidate set includes a trusted-reference action regardless of whether the detector gate is active:
+\begin{equation}
+    \mathcal{C}_t^{\mathrm{ref}}
+    =
+    \left\{
+        a_t^{\eta},
+        a_t^{\mathrm{mit}},
+        a_t^{\mathrm{ref}}
+    \right\},
+    \qquad
+    a_t^{M}
+    =
+    \arg\max_{a \in \mathcal{C}_t^{\mathrm{ref}}}
+    \widehat{Q}_t(a).
+    \label{eq:always_reference_screening}
+\end{equation}
+The IEEE 34 evidence uses this as the strongest robust-mitigation benchmark for high-impact action/status attacks.
+
+\subsubsection{Horizon-Screened Mitigation}
+
+For IEEE 123 advanced mitigation, candidate screening can be extended over a horizon. Let $\hat{x}_{t+h}^{a}$ be the predicted rollout state when candidate action $a$ is selected and subsequent actions follow a specified rollout rule. The horizon-screening value is
+\begin{equation}
+    \widehat{Q}_{t:t+H}(a)
+    =
+    \sum_{h=0}^{H-1}
+    \left(
+        \Delta t
+        \sum_{i \in \mathcal{L}}
+        \hat{p}^{\mathrm{srv}}_{i,t+h}(\hat{x}_{t+h}^{a})
+        -
+        \lambda_V
+        \widehat{\nu}_{t+h}(\hat{x}_{t+h}^{a})
+    \right),
+    \label{eq:horizon_screening_score}
+\end{equation}
+and the horizon-screened action is
+\begin{equation}
+    a_t^{M,H}
+    =
+    \arg\max_{a \in \mathcal{C}_t}
+    \widehat{Q}_{t:t+H}(a).
+    \label{eq:horizon_screening_action}
+\end{equation}
+The variants `horizon\_screen\_raw\_mitigated' and `horizon\_screen\_raw\_mitigated\_reference' differ in whether the candidate pool includes only raw and mitigated actions or also trusted-reference actions.
+
+\subsection{Observation Criticality and Coordinated Attacks}
+\label{subsec:criticality_model}
+
+For an observation target $j$ and attack family $\eta$, the single-target criticality score is the mean physical degradation over deterministic cases:
+\begin{equation}
+    C_{\eta}(j)
+    =
+    \frac{1}{|\Omega_j|}
+    \sum_{\omega \in \Omega_j}
+    D^{\eta}_{j}(\omega),
+    \label{eq:criticality_score}
+\end{equation}
+where $\Omega_j$ is the set of cases in which the attack is applicable to target $j$. Targets are ranked by $C_{\eta}(j)$, maximum degradation, damaging-case count, and mitigation residuals.
+
+For a coordinated attack on target set $\mathcal{J}$,
+\begin{equation}
+    \tilde{o}_t
+    =
+    \mathcal{A}_{\eta,\mathcal{J}}(o_t),
+    \qquad
+    \mathcal{J} = \{j_1,j_2,\ldots,j_k\}.
+    \label{eq:coordinated_attack}
+\end{equation}
+The coordinated degradation is
+\begin{equation}
+    D^{\eta}_{\mathcal{J}}(\omega)
+    =
+    \max
+    \left(
+        0,
+        E^0(\omega)
+        -
+        E^{\eta,\mathcal{J}}(\omega)
+    \right).
+    \label{eq:coordinated_degradation}
+\end{equation}
+
+For the IEEE 123 branch-flow subset ablation, let $\mathcal{J}_k$ be the top-$k$ selected branch-flow target subset and let $D_{\mathrm{base}}^{\mathrm{bf}}(\omega)$ be the baseline branch-flow hiding degradation. The total baseline reproduction ratio is
+\begin{equation}
+    \rho_k^{\mathrm{bf}}
+    =
+    \frac{
+        \sum_{\omega \in \Omega_{\mathrm{bf}}}
+        D^{\mathrm{bf}}_{\mathcal{J}_k}(\omega)
+    }{
+        \sum_{\omega \in \Omega_{\mathrm{bf}}}
+        D_{\mathrm{base}}^{\mathrm{bf}}(\omega)
+    },
+    \label{eq:branchflow_reproduction}
+\end{equation}
+when the denominator is positive. This metric quantifies whether baseline branch-flow vulnerability is driven by one observation or by a coordinated subset of observations.
+
+\subsection{Scope of the Mathematical Claims}
+\label{subsec:model_scope}
+
+The model supports claims for direct attacks on observations available to the current controller. It does not, by itself, support direct load-demand FDIA, DER-availability FDIA, or explicit fault-status FDIA unless those variables are added to the controller observation $o_t$ and evaluated with the same clean/attacked/mitigated physical workflow. This distinction is important for preserving the audit boundary of the IEEE 34-bus and IEEE 123-bus evidence packages.

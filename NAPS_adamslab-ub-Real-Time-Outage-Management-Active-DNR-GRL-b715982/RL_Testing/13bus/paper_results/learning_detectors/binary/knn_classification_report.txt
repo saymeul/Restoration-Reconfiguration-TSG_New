@@ -1,0 +1,6 @@
+label,precision,recall,f1,support
+attacked,1.000000,0.977778,0.988764,90
+clean,0.916667,1.000000,0.956522,22
+accuracy,0.982143
+macro_f1,0.972643
+weighted_f1,0.982431

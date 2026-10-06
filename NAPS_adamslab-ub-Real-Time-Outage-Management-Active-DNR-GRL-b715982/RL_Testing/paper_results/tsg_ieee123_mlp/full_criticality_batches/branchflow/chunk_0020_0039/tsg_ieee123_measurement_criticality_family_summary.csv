@@ -1,0 +1,2 @@
+target_family,case_count,target_count,mean_physical_degradation_kwh,max_physical_degradation_kwh,damaging_case_count,damaging_case_rate,action_changed_count,action_changed_rate,detection_rate,bypass_high_impact_rate
+branchflow,257,13,3.2274700347306684,829.4597989257818,1,0.0038910505836575876,1,0.0038910505836575876,0.023346303501945526,0.0

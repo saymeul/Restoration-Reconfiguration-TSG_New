@@ -1,0 +1,5 @@
+model,feature_mode,train_samples,test_samples,accuracy,precision,recall_detection_rate,false_positive_rate,f1,runtime_sec
+centroid,raw_measurement_vector,160,80,0.525,0.52,0.65,0.6,0.5777777777777778,0.0005532999999999788
+knn,raw_measurement_vector,160,80,0.5,0.5,0.275,0.275,0.3548387096774194,0.008517700000000517
+linear_torch,raw_measurement_vector,160,80,0.5,0.5,0.35,0.35,0.4117647058823529,0.16360220000000059
+mlp_torch,raw_measurement_vector,160,80,0.5,0.5,0.375,0.375,0.42857142857142855,0.4867096000000002

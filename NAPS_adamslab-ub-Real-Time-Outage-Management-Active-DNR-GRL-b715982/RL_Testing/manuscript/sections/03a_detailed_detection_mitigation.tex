@@ -1,0 +1,54 @@
+% Detailed detection and mitigation analysis subsection.
+% Suggested placement: after the IEEE 123 advanced mitigation ablation
+% and before the companion-controller evidence subsection.
+
+\subsection{Detailed Detection and Mitigation Analysis}
+\label{subsec:detailed_detection_mitigation}
+
+The defense results should be interpreted as a three-layer cyber-physical pipeline. The first layer is attack detection, which determines whether the received observation violates residual, status-integrity, learning-detector, or fused consistency checks. The second layer is mitigation candidate generation, which determines whether the controller has access to an attacked-observation action, a detector-mitigated action, a trusted-reference action, or a horizon-screened action set. The third layer is physical action screening, which selects the candidate expected to recover the most restored energy when evaluated against the true feeder state. The key result is that these layers are not interchangeable: a detector can correctly flag an attack and still fail to recover load if the mitigation candidate set is weak, while a stronger mitigation screen can recover degradation even when the detector is relaxed or bypassed.
+
+\subsubsection{Detection Behavior Across the Two Feeders}
+\label{subsubsec:detection_behavior}
+
+For the IEEE 34-bus feeder, strict and current residual/status-integrity checks detect the dominant high-impact coordinated attacks in all cases. Coordinated \texttt{Load\_s890}-based attacks under current or strict profiles have 100\% detection and no high-impact bypass. The relaxed-status profile intentionally weakens binary-status assumptions and exposes the detector's dependence on status integrity. Under relaxed status tolerance, detection for \texttt{highimpact\_dispatch\_s890\_voltage\_816} and \texttt{highimpact\_dispatch\_s890\_line\_l8\_voltage\_816} falls to 66.667\%. Under stealth-stress variants such as \texttt{stealth\_load\_s890\_single\_mask}, relaxed detection can fall to 0\%, producing 50\% high-impact bypass and 50\% stealth success.
+
+The learning-detector ablation improves the detector side of this pipeline but does not, by itself, solve restoration recovery. In the IEEE 34 relaxed-status setting, the learning detector raises detection for \texttt{highimpact\_dispatch\_s890\_line\_l8\_voltage\_816} from 66.667\% to 96.667\%. However, when the mitigation rule remains gated and the candidate set remains inadequate, the residual degradation remains 3065.622 kWh and the recovery ratio remains 0\%. Thus, the learning detector is best interpreted as an additional detection signal, not as a complete resilience mechanism.
+
+For the IEEE 123-bus feeder, detection behavior depends strongly on attack family. Baseline action-mask false-unavailable, topology-drop, and energy-inflation attacks are detected in 100\% of cases. Baseline voltage masking is detected in 86.667\% of cases, and baseline branch-flow hiding is detected in 80.000\% of cases. This lower branch-flow detection rate is consistent with the IEEE 123 branch-flow finding: individual branch-flow observations are weakly critical, while coordinated branch-flow hiding creates the physical degradation. The detector therefore faces a harder problem when the attack effect is distributed across multiple measurement channels.
+
+\subsubsection{Mitigation Behavior and Failure Modes}
+\label{subsubsec:mitigation_behavior}
+
+The mitigation evidence shows three defense regimes. First, gated screening is effective only when the detector fires and the gated candidate set contains a physically good action. In IEEE 34, current-profile gated screening recovers 94.118\% of the degradation for the main high-impact \texttt{Load\_s890} coordinated attacks. The same gated logic fails under relaxed detection: for \texttt{highimpact\_dispatch\_s890\_voltage\_816}, residual degradation remains 3050.395 kWh and recovery drops to 7.771\%; for \texttt{highimpact\_dispatch\_s890\_line\_l8\_voltage\_816}, residual degradation equals the attacked degradation and recovery is 0\%. This is a detector-coupled mitigation failure, not simply a detector failure.
+
+Second, always-reference screening is a strong robust benchmark because the trusted-reference candidate remains available even when the detector gate is missed or relaxed. In IEEE 34, relaxed-status always-reference screening reduces residual degradation to 44.770 kWh and recovers 94.118\% for high-impact coordinated attacks. In stealth-stress attacks where relaxed gated screening has zero recovery, relaxed always-reference screening reduces the residual to 30.773 kWh and recovers 93.750\%. This demonstrates that most of the loss is recoverable if the mitigation layer can evaluate a high-quality reference action. The paper should describe this as a benchmark requiring trusted reference information, not as a cost-free online defense.
+
+Third, horizon-screened mitigation addresses residual failures caused by myopic or incomplete candidate evaluation. In IEEE 123, the current one-step FDIA-aware defense has zero recovery on the 58 hard cases used in the advanced mitigation ablation: total attacked degradation and total residual degradation are both 2617.432 kWh. In contrast, all-channel reference, detector-mitigated-only, horizon-screened raw/mitigated, and horizon-screened raw/mitigated/reference variants each reduce total residual degradation to 0.000 kWh and recover 100\% of the degradation. This shows that the hard-case residuals are not caused by unavoidable physical infeasibility; they are caused by the current defense architecture's candidate-generation or screening limitations.
+
+\begin{table*}[t]
+\centering
+\caption{Selected detection and mitigation outcomes illustrating why detection and recovery must be evaluated separately.}
+\label{tab:detection_mitigation_analysis}
+\scriptsize
+\begin{tabular}{llcccp{4.0cm}}
+\hline
+Feeder and case group & Defense mode & Detection & Residual $R$ & Recovery & Interpretation \\
+\hline
+IEEE 34, \texttt{highimpact\_dispatch\_s890\_voltage\_816} & Current + gated & 100.000\% & 44.770 & 94.118\% & Detection and candidate screening both succeed. \\
+IEEE 34, \texttt{highimpact\_dispatch\_s890\_voltage\_816} & Relaxed + gated & 66.667\% & 3050.395 & 7.771\% & Missed or weak detection prevents the gated defense from applying a strong candidate. \\
+IEEE 34, \texttt{highimpact\_dispatch\_s890\_line\_l8\_voltage\_816} & Relaxed + learning + gated & 96.667\% & 3065.622 & 0.000\% & Better detection alone is insufficient when the mitigation action remains poor. \\
+IEEE 34, \texttt{stealth\_load\_s890\_single\_mask} & Relaxed + always-reference & 0.000\% & 30.773 & 93.750\% & A strong reference candidate can recover most degradation even under detector bypass. \\
+IEEE 123, baseline branch-flow hiding & Current defense & 80.000\% & 5.196 & 99.834\% & Distributed measurement attack is not always detected, but mitigated cases leave little residual. \\
+IEEE 123, 58 hard cases & Current one-step FDIA-aware & -- & 2617.432 & 0.000\% & Existing one-step mitigation does not improve the hard-case subset. \\
+IEEE 123, 58 hard cases & Horizon/reference variants & -- & 0.000 & 100.000\% & Stronger candidate generation and screening remove the hard-case residuals. \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsubsection{Cyber-Physical Interpretation}
+\label{subsubsec:cyber_physical_interpretation}
+
+The detection and mitigation results imply that the relevant security objective is not merely attack classification. The operational objective is to preserve restored energy. A detector decision $d=1$ is useful only if it causes the controller to avoid the physically damaging action. Conversely, a mitigation rule can be valuable even when the detector is uncertain, provided that the rule safely compares candidate restoration actions using trusted or screened physical information. This is why the paper reports both detection rate and recovered-degradation ratio. Detection rate measures cyber observability of the attack; recovered-degradation ratio measures whether the cyber defense actually restores the physical service outcome.
+
+The strongest practical implication is that restoration controllers should not treat action masks, topology/status flags, and branch-flow observations as passive input features. They should be protected and cross-checked as decision-critical cyber-physical interfaces. For action/status FDIA, the attack can remove the clean restoration action before the policy acts. For coordinated branch-flow FDIA, the physical effect can arise from a set of individually weak measurement changes. A robust defense therefore needs both channel-level integrity checks and restoration-aware candidate screening. The proposed evaluation workflow captures this requirement by comparing clean, attacked, and mitigated trajectories on the same physical feeder state.
+

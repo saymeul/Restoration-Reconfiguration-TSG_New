@@ -1,0 +1,6 @@
+target_observation_id,target_family,target_component_type,target_component_name,component_kind,component_mode,case_count,coordinated_attack_count,coordinated_attack_ids,component_applied_count,component_applied_rate,mean_physical_degradation_kwh,max_physical_degradation_kwh,damaging_case_count,damaging_case_rate,detection_rate,bypass_high_impact_rate,component_presence_rank
+action_mask.Load_s844,action_mask,dispatch_load,Load.s844,action_mask,false_unavailable,2,1,dispatch_s844_switch_swtie1,2,1.0,531.4371011189722,534.0398250936128,2,1.0,1.0,0.0,1
+action_mask.swtie1,action_mask,tie_switch,swtie1,action_mask,false_unavailable,2,1,dispatch_s844_switch_swtie1,2,1.0,531.4371011189722,534.0398250936128,2,1.0,1.0,0.0,2
+action_mask.swtie4,action_mask,tie_switch,swtie4,action_mask,false_unavailable,2,1,dispatch_s890_switch_swtie4,2,1.0,322.8480014892915,560.2034024958953,2,1.0,1.0,0.0,3
+action_mask.Load_s890,action_mask,dispatch_load,Load.s890,action_mask,false_unavailable,4,2,dispatch_s890_switch_swtie4;dispatch_s890_voltage_816,4,1.0,322.1735901889991,560.2034024958953,4,1.0,1.0,0.0,4
+bus_voltage.816,voltage,bus,816,voltage,false_low,2,1,dispatch_s890_voltage_816,2,1.0,321.49917888870675,560.2033948372045,2,1.0,1.0,0.0,5

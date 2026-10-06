@@ -1,0 +1,31 @@
+rank,study_id,attack_or_corruption,target_observation_id,case_count,mean_degradation_kwh,max_degradation_kwh,damaging_cases,detection_rate_pct,bypass_rate_pct,mitigation_recovery_pct
+1,attack_family_baseline,action_mask_false_unavailable,,30,0.0,0.0,0,100.0,0.0,0.0
+2,attack_family_baseline,branchflow_hiding,,30,0.0,0.0,0,96.666667,0.0,0.0
+3,attack_family_baseline,energy_inflation,,30,0.0,0.0,0,100.0,0.0,0.0
+4,attack_family_baseline,topology_drop,,30,0.0,0.0,0,100.0,0.0,0.0
+5,attack_family_baseline,voltage_masking,,30,0.0,0.0,0,100.0,0.0,0.0
+6,attack_sensitivity,action_mask_false_unavailable: action_mask_false_unavailable_L1,,30,0.0,0.0,0,100.0,0.0,0.0
+7,attack_sensitivity,action_mask_false_unavailable: action_mask_false_unavailable_L2,,30,0.0,0.0,0,100.0,0.0,0.0
+8,attack_sensitivity,action_mask_false_unavailable: action_mask_false_unavailable_L3,,30,0.0,0.0,0,100.0,0.0,0.0
+9,attack_sensitivity,action_mask_false_unavailable: action_mask_false_unavailable_L4,,30,0.0,0.0,0,100.0,0.0,0.0
+10,attack_sensitivity,action_mask_false_unavailable: action_mask_false_unavailable_L5,,30,0.0,0.0,0,100.0,0.0,0.0
+11,attack_sensitivity,branchflow_hiding: branchflow_hiding_L1,,30,0.0,0.0,0,80.0,0.0,0.0
+12,attack_sensitivity,branchflow_hiding: branchflow_hiding_L2,,30,0.0,0.0,0,100.0,0.0,0.0
+13,attack_sensitivity,branchflow_hiding: branchflow_hiding_L3,,30,0.0,0.0,0,100.0,0.0,0.0
+14,attack_sensitivity,branchflow_hiding: branchflow_hiding_L4,,30,0.0,0.0,0,100.0,0.0,0.0
+15,attack_sensitivity,branchflow_hiding: branchflow_hiding_L5,,30,0.0,0.0,0,100.0,0.0,0.0
+16,attack_sensitivity,energy_inflation: energy_inflation_L1,,30,0.0,0.0,0,20.0,0.0,0.0
+17,attack_sensitivity,energy_inflation: energy_inflation_L2,,30,0.0,0.0,0,100.0,0.0,0.0
+18,attack_sensitivity,energy_inflation: energy_inflation_L3,,30,0.0,0.0,0,100.0,0.0,0.0
+19,attack_sensitivity,energy_inflation: energy_inflation_L4,,30,0.0,0.0,0,100.0,0.0,0.0
+20,attack_sensitivity,energy_inflation: energy_inflation_L5,,30,0.0,0.0,0,100.0,0.0,0.0
+21,attack_sensitivity,topology_drop: topology_drop_L1,,30,0.0,0.0,0,100.0,0.0,0.0
+22,attack_sensitivity,topology_drop: topology_drop_L2,,30,0.0,0.0,0,100.0,0.0,0.0
+23,attack_sensitivity,topology_drop: topology_drop_L3,,30,0.0,0.0,0,100.0,0.0,0.0
+24,attack_sensitivity,topology_drop: topology_drop_L4,,30,0.0,0.0,0,100.0,0.0,0.0
+25,attack_sensitivity,topology_drop: topology_drop_L5,,30,0.0,0.0,0,100.0,0.0,0.0
+26,attack_sensitivity,voltage_masking: voltage_masking_L1,,30,0.0,0.0,0,100.0,0.0,0.0
+27,attack_sensitivity,voltage_masking: voltage_masking_L2,,30,0.0,0.0,0,100.0,0.0,0.0
+28,attack_sensitivity,voltage_masking: voltage_masking_L3,,30,0.0,0.0,0,100.0,0.0,0.0
+29,attack_sensitivity,voltage_masking: voltage_masking_L4,,30,0.0,0.0,0,100.0,0.0,0.0
+30,attack_sensitivity,voltage_masking: voltage_masking_L5,,30,0.0,0.0,0,100.0,0.0,0.0

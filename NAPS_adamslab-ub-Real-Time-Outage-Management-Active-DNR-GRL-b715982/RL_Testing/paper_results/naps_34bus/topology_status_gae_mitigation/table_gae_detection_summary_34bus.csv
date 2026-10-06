@@ -1,0 +1,4 @@
+target_method,samples,attacked_cases,clean_cases,tp,tn,fp,fn,accuracy,precision,recall_detection_rate,false_positive_rate,clean_alarm_rate,attacked_detection_rate,mean_clean_score,mean_attacked_score,threshold
+BPSO,10,5,5,5,5,0,0,1.0,1.0,1.0,0.0,0.0,1.0,0.7173215389251709,2.099177289009094,0.8353686902909511
+GRL,10,5,5,5,3,2,0,0.8,0.7142857142857143,1.0,0.4,0.4,1.0,0.7762590169906616,2.2841816425323485,0.8353686902909511
+MLP,10,5,5,5,5,0,0,1.0,1.0,1.0,0.0,0.0,1.0,0.7136827826499939,3.0568787097930907,0.8353686902909511

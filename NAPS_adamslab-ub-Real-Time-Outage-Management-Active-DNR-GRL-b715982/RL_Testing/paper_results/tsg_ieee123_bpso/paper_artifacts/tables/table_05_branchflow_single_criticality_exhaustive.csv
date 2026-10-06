@@ -1,0 +1,1 @@
+target_observation_id,component_name,measurement_index,case_count,attack_applied_count,mean_degradation_kwh,max_degradation_kwh,damaging_cases,detection_rate_pct,mitigation_recovery_pct

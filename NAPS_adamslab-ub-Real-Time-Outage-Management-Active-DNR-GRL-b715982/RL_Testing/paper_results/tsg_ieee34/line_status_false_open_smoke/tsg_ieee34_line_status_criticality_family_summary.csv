@@ -1,0 +1,2 @@
+target_family,case_count,target_count,mean_physical_degradation_kwh,max_physical_degradation_kwh,damaging_case_count,damaging_case_rate,action_changed_count,action_changed_rate,detection_rate,bypass_high_impact_rate
+topology,6,3,1.2974609390826117,7.78476563449567,1,0.16666666666666666,2,0.3333333333333333,1.0,0.0

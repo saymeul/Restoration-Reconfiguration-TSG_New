@@ -1,0 +1,63 @@
+{
+  "experiment": "IEEE 34 TSG paper artifact generation",
+  "figures": [
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\figures\\fig_01_top_master_degradation.png",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\figures\\fig_02_observation_criticality.png",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\figures\\fig_03_coordinated_attack_degradation.png",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\figures\\fig_04_advanced_defense_residual.png",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\figures\\fig_05_detection_bypass_rates.png",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\figures\\fig_06_learning_detector_ablation.png"
+  ],
+  "generated_at": "2026-06-18T11:21:42",
+  "missing_inputs": [],
+  "narrative": "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\IEEE34_TSG_Paper_Results_Narrative.md",
+  "output_dir": "paper_results\\tsg_ieee34_mlp\\paper_artifacts",
+  "readme": "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\README_IEEE34_PaperArtifacts.md",
+  "results_dir": "paper_results\\tsg_ieee34_mlp",
+  "row_counts": {
+    "advanced_defense": 48,
+    "advanced_defense_learning": 48,
+    "attack_family": 5,
+    "coordinated_attack": 10,
+    "learning_ablation": 48,
+    "learning_model_summary": 8,
+    "master_evidence": 299,
+    "observation_criticality": 59
+  },
+  "source_inputs": {
+    "advanced_defense": "paper_results\\tsg_ieee34_mlp\\advanced_defense_stealth_full_deterministic\\tsg_ieee34_advanced_defense_stealth_ranking.csv",
+    "advanced_defense_learning": "paper_results\\tsg_ieee34_mlp\\advanced_defense_stealth_learning_full_deterministic\\tsg_ieee34_advanced_defense_stealth_ranking.csv",
+    "attack_surface_audit": "paper_results\\tsg_ieee34_mlp\\master_evidence_audit\\ieee34_attack_surface_audit.csv",
+    "baseline_attack": "paper_results\\tsg_ieee34_mlp\\baseline_attack_full_deterministic\\tsg_ieee34_attack_ranking.csv",
+    "branchflow_hide": "paper_results\\tsg_ieee34_mlp\\measurement_criticality_branchflow_hide_full\\tsg_ieee34_measurement_criticality_ranking.csv",
+    "coordinated_attack": "paper_results\\tsg_ieee34_mlp\\coordinated_attack_full_deterministic\\tsg_ieee34_coordinated_attack_ranking.csv",
+    "dispatch_load_action_mask": "paper_results\\tsg_ieee34_mlp\\action_mask_criticality_dispatch_load_false_unavailable_full_deterministic\\tsg_ieee34_action_mask_criticality_ranking.csv",
+    "learning_model_summary": "34bus\\paper_results\\learning_detectors\\model_summary.csv",
+    "line_status_false_closed": "paper_results\\tsg_ieee34_mlp\\line_status_false_closed_full_deterministic\\tsg_ieee34_line_status_criticality_ranking.csv",
+    "line_status_false_open": "paper_results\\tsg_ieee34_mlp\\line_status_false_open_full_deterministic\\tsg_ieee34_line_status_criticality_ranking.csv",
+    "master_evidence": "paper_results\\tsg_ieee34_mlp\\master_evidence_audit\\ieee34_master_evidence_table.csv",
+    "study_summary": "paper_results\\tsg_ieee34_mlp\\master_evidence_audit\\ieee34_study_summary.csv",
+    "switch_action_mask": "paper_results\\tsg_ieee34_mlp\\action_mask_criticality_switch_full_deterministic\\tsg_ieee34_action_mask_criticality_ranking.csv",
+    "voltage_false_low": "paper_results\\tsg_ieee34_mlp\\measurement_criticality_voltage_false_low_full\\tsg_ieee34_measurement_criticality_ranking.csv"
+  },
+  "tables": [
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_01_master_top_evidence.csv",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_01_master_top_evidence.md",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_02_attack_family_ranking.csv",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_02_attack_family_ranking.md",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_03_observation_criticality.csv",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_03_observation_criticality.md",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_04_coordinated_attack_ranking.csv",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_04_coordinated_attack_ranking.md",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_05_advanced_defense_stealth.csv",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_05_advanced_defense_stealth.md",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_06_learning_detector_ablation.csv",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_06_learning_detector_ablation.md",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_07_learning_detector_model_summary.csv",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_07_learning_detector_model_summary.md",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_08_attack_surface_audit.csv",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_08_attack_surface_audit.md",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_09_study_summary.csv",
+    "paper_results\\tsg_ieee34_mlp\\paper_artifacts\\tables\\table_09_study_summary.md"
+  ]
+}

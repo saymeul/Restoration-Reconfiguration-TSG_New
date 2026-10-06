@@ -1,0 +1,399 @@
+% Case-study results and discussion section for an IEEE Transactions on Smart Grid manuscript.
+% Intended use after the mathematical model section:
+% \input{sections/03_case_study_results_discussion}
+
+\section{Case Studies, Results, and Discussion}
+\label{sec:case_studies_results}
+
+This section reports the simulation evidence obtained on the IEEE 34-bus and IEEE 123-bus distribution feeders. The results are organized to separate four questions: (i) which observation channels are physically consequential when corrupted, (ii) whether attacks are detected, (iii) whether detection alone is sufficient to recover lost restoration performance, and (iv) which mitigation designs recover the clean restoration outcome. All restored-energy quantities are reported in kWh and are computed from paired clean, attacked, and mitigated OpenDSS evaluations under the same outage and loadshape scenario.
+
+\subsection{Evidence Boundary and Study Inventory}
+\label{subsec:evidence_boundary_inventory}
+
+The evidence packages used in this manuscript are frozen local simulation artifacts. For the IEEE 34-bus feeder, the frozen package contains 11 completed studies, 299 master evidence rows, nine paper table bundles, six paper figures, and 48 learning-detector ablation rows. The repeat-ranking audit reports zero ranking differences for every included study, and the freeze audit reports zero missing input files. For the IEEE 123-bus feeder, the frozen package contains the completed baseline attack-family study, exhaustive action-mask criticality over all 41 current action-mask targets, exhaustive single-target branch-flow criticality over all 138 current branch-flow targets, a six-row branch-flow subset ablation, 190 defense-stress groups, six advanced mitigation variants, nine paper table bundles, and five paper figures. The IEEE 123 audit also reports zero missing input files.
+
+The claim boundary is therefore precise. The paper supports direct observation-level FDIA claims for the observation variables exposed to the current restoration controllers: action/status masks, topology/status features, bus-voltage features, branch-flow features, and global scalar features. The results do not claim direct FDIA on load demand, DER availability, or explicit fault-status variables unless those variables are first added to the controller observation model and evaluated through the same clean/attacked/mitigated physical workflow. The IEEE 8500-node feeder is treated as future large-scale validation, not as a current result.
+
+\begin{table*}[t]
+\centering
+\caption{Frozen evidence inventory used for the IEEE 34-bus and IEEE 123-bus case studies.}
+\label{tab:evidence_inventory}
+\scriptsize
+\begin{tabular}{lcc}
+\hline
+Evidence item & IEEE 34-bus & IEEE 123-bus \\
+\hline
+Freeze date & 2026-06-16 & 2026-06-17 \\
+Completed studies / groups & 11 studies & Baseline, exhaustive criticality, defense stress, mitigation ablation \\
+Master or case evidence rows & 299 master rows & 150 baseline case rows plus study-specific criticality rows \\
+Action-mask criticality coverage & Dispatch loads and switches in current registry & 41/41 targets completed \\
+Branch-flow criticality coverage & 36 single-target rows & 138/138 single-target rows completed \\
+Branch-flow subset ablation & Not primary & 6 subset rows \\
+Defense stress evidence & Advanced stealth and learning-detector stress & 190 groups plus 58 low-recovery cases \\
+Advanced mitigation variants & Detector profiles and screening modes & 6 variants on hard cases \\
+Paper table bundles & 9 & 9 \\
+Paper figures & 6 & 5 \\
+Missing input files in audit & 0 & 0 \\
+Repeat-ranking differences & 0 & Frozen/audited package \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsection{IEEE 34-Bus Case Study}
+\label{subsec:ieee34_results}
+
+\subsubsection{Baseline Attack-Family Ranking}
+\label{subsubsec:ieee34_baseline_families}
+
+The IEEE 34-bus baseline study first evaluates broad attack families before ranking individual observation targets. Among the baseline families, false-unavailable action-mask attacks are the only family with substantial mean physical degradation. They produce a mean degradation of 46.603 kWh, a maximum degradation of 289.271 kWh, and damaging outcomes in 8 of 30 cases. The damaging-case rate is therefore 26.667\%. These attacks are detected in all cases and fully recovered by the baseline mitigation workflow in the aggregate table.
+
+Voltage masking has negligible mean effect in the baseline family table, with mean and maximum degradation reported as 0.000 kWh but one damaging case under the positive-degradation counter. This indicates that the baseline voltage experiment is mostly benign under the tested scenario distribution, although isolated case-level changes can occur. Branch-flow hiding, energy inflation, and topology drop have no positive physical degradation in the baseline attack-family table. However, the later criticality and coordinated-attack studies show that the absence of average baseline damage does not imply that every target or target combination is harmless.
+
+\begin{table}[t]
+\centering
+\caption{IEEE 34-bus baseline attack-family outcomes.}
+\label{tab:ieee34_attack_family}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Attack family & Cases & Mean $D$ & Max $D$ & Damaging & Recovery \\
+\hline
+Action-mask false unavailable & 30 & 46.603 & 289.271 & 8 & 100.000\% \\
+Voltage masking & 30 & 0.000 & 0.000 & 1 & 100.000\% \\
+Branch-flow hiding & 30 & 0.000 & 0.000 & 0 & 0.000\% \\
+Energy inflation & 30 & 0.000 & 0.000 & 0 & 0.000\% \\
+Topology drop & 30 & 0.000 & 0.000 & 0 & 0.000\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Observation Criticality}
+\label{subsubsec:ieee34_criticality}
+
+The individual-target criticality study shows that the largest IEEE 34-bus vulnerabilities are not generic measurement noise effects; they are tied to specific restoration decisions. The most critical target is \texttt{action\_mask.Load\_s890}. Making this load-restoration action falsely unavailable produces a mean physical degradation of 3038.190 kWh, a maximum degradation of 8832.380 kWh, and damaging outcomes in 16 of 30 deterministic cases. Detection is 100\%, the action changes in 100\% of cases, and mitigation recovers 93.750\% of the degradation.
+
+The second most critical target is \texttt{action\_mask.Load\_s844}, with mean degradation 1627.701 kWh, maximum degradation 8663.260 kWh, and 16 damaging cases. Unlike \texttt{Load\_s890}, mitigation recovers 100\% of the positive degradation for this target. These two rows indicate that action/status observations associated with major load pickup decisions can dominate the physical risk, even when the attack is simple and binary.
+
+Topology/status attacks are also consequential when the attacked edge is operationally important. The hidden-outage false-closed target \texttt{topology\_edge.Line.l30} produces 169.566 kWh degradation in its applicable case, while \texttt{topology\_edge.Line.l28} produces mean degradation 131.945 kWh over two cases. False-open \texttt{topology\_edge.Line.l8} produces mean degradation 44.559 kWh, and \texttt{topology\_edge.Line.824848} produces mean degradation 39.277 kWh. Voltage targets are generally lower impact than the top action-mask targets, but \texttt{bus\_voltage.816} reaches a maximum degradation of 419.903 kWh and has four damaging cases.
+
+\begin{table*}[t]
+\centering
+\caption{Selected IEEE 34-bus observation criticality results.}
+\label{tab:ieee34_observation_criticality}
+\scriptsize
+\begin{tabular}{llccccc}
+\hline
+Target & Attack interpretation & Cases & Mean $D$ & Max $D$ & Damaging & Recovery \\
+\hline
+\texttt{action\_mask.Load\_s890} & False-unavailable load action & 30 & 3038.190 & 8832.380 & 16 & 93.750\% \\
+\texttt{action\_mask.Load\_s844} & False-unavailable load action & 30 & 1627.701 & 8663.260 & 16 & 100.000\% \\
+\texttt{topology\_edge.Line.l30} & False-closed hidden outage & 1 & 169.566 & 169.566 & 1 & 0.000\% \\
+\texttt{topology\_edge.Line.l28} & False-closed hidden outage & 2 & 131.945 & 192.747 & 2 & 100.000\% \\
+\texttt{action\_mask.Load\_d818\_820sa} & False-unavailable load action & 30 & 99.597 & 377.610 & 9 & 100.000\% \\
+\texttt{topology\_edge.Line.l18} & False-closed hidden outage & 2 & 96.374 & 192.747 & 1 & 100.000\% \\
+\texttt{action\_mask.swtie4} & False-unavailable switch action & 30 & 67.253 & 296.908 & 9 & 100.000\% \\
+\texttt{bus\_voltage.816} & False-low voltage & 30 & 64.222 & 419.903 & 4 & 75.000\% \\
+\texttt{topology\_edge.Line.l8} & False-open topology/status & 27 & 44.559 & 419.903 & 3 & 100.000\% \\
+\texttt{topology\_edge.Line.824848} & False-open topology/status & 20 & 39.277 & 419.903 & 7 & 85.714\% \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsubsection{Coordinated Attacks}
+\label{subsubsec:ieee34_coordinated}
+
+The coordinated IEEE 34-bus attacks show the highest degradation in the feeder. The top three coordinated configurations all include the high-impact \texttt{Load\_s890} dispatch-load target and produce the same aggregate degradation: mean degradation 3080.849 kWh, maximum degradation 9115.475 kWh, and 17 damaging cases out of 30. These attacks are detected in all cases, have zero high-impact bypass under the strict/current detector profile, and recover 94.118\% of the positive degradation under the strongest mitigation configuration.
+
+The coordinated pair \texttt{dispatch\_s890\_switch\_swtie4} produces mean degradation 3009.214 kWh, maximum degradation 8808.308 kWh, and 14 damaging cases, with full recovery. The \texttt{Load\_s844}-based coordinated attacks form a second tier: \texttt{dispatch\_s844\_switch\_swtie1} has mean degradation 1641.454 kWh, and \texttt{dispatch\_s844\_voltage\_852} has mean degradation 1639.677 kWh. Both recover fully in the coordinated table.
+
+These results are important for interpretation. Branch-flow or voltage corruption alone is not the primary IEEE 34-bus risk in the frozen evidence, but those channels can accompany action/status corruption and slightly change the case-level outcome. The dominant physical mechanism remains the denial or alteration of high-value restoration decisions through the action/status observation interface.
+
+\begin{table*}[t]
+\centering
+\caption{IEEE 34-bus coordinated-attack outcomes.}
+\label{tab:ieee34_coordinated}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Coordinated attack & Cases & Mean $D$ & Max $D$ & Damaging & Recovery \\
+\hline
+\texttt{dispatch\_s890\_branchflow\_l8\_voltage\_816} & 30 & 3080.849 & 9115.475 & 17 & 94.118\% \\
+\texttt{dispatch\_s890\_voltage\_816} & 30 & 3080.849 & 9115.475 & 17 & 94.118\% \\
+\texttt{hidden\_l28\_voltage\_816\_dispatch\_s890} & 30 & 3080.849 & 9115.475 & 17 & 94.118\% \\
+\texttt{dispatch\_s890\_line\_l8\_voltage\_816} & 30 & 3065.622 & 9124.530 & 17 & 94.118\% \\
+\texttt{dispatch\_s890\_switch\_swtie4} & 30 & 3009.214 & 8808.308 & 14 & 100.000\% \\
+\texttt{dispatch\_s844\_switch\_swtie1} & 30 & 1641.454 & 8667.718 & 12 & 100.000\% \\
+\texttt{dispatch\_s844\_voltage\_852} & 30 & 1639.677 & 8663.260 & 17 & 100.000\% \\
+\texttt{switch\_swtie4\_line\_l8\_voltage\_816} & 30 & 83.651 & 419.903 & 9 & 88.889\% \\
+\texttt{hidden\_l30\_switch\_swtie4} & 30 & 72.474 & 466.348 & 9 & 77.778\% \\
+\texttt{line\_l8\_line\_824848\_voltage\_816} & 30 & 49.150 & 419.903 & 5 & 80.000\% \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsubsection{Detection, Stealth Stress, and Mitigation}
+\label{subsubsec:ieee34_defense}
+
+The IEEE 34-bus defense study separates detector sensitivity from mitigation quality. Under current residual/status checks or strict integrity checks, high-impact coordinated attacks involving \texttt{Load\_s890} are detected in 100\% of cases. With always-reference candidate screening or gated candidate screening under these detector profiles, the residual degradation falls to 44.770 kWh and the recovered-degradation ratio is 94.118\%.
+
+The relaxed-status detector profile exposes a key weakness. For \texttt{highimpact\_dispatch\_s890\_voltage\_816}, relaxed-status detection falls to 66.667\%. If mitigation is gated strictly on detection, the residual degradation remains 3050.395 kWh and the recovery ratio drops to 7.771\%. For \texttt{highimpact\_dispatch\_s890\_line\_l8\_voltage\_816}, relaxed-status gated mitigation is worse: residual degradation equals the attacked degradation of 3065.622 kWh, giving 0\% recovery. In contrast, relaxed-status always-reference screening still reduces residual degradation to 44.770 kWh and recovers 94.118\%. Therefore, the IEEE 34-bus evidence shows that detection is useful but not sufficient; the mitigation layer must retain a high-quality candidate even when the detector gate is uncertain.
+
+The stealth-stress experiments reinforce this point. For \texttt{stealth\_load\_s890\_branchflow\_l8\_small} and \texttt{stealth\_load\_s890\_single\_mask}, relaxed-status gated mitigation has mean degradation 3038.190 kWh, residual degradation 3038.190 kWh, zero recovery, zero detection, 50\% high-impact bypass, and 50\% stealth success. For \texttt{stealth\_load\_s890\_voltage\_816\_phase}, relaxed-status gated mitigation detects 30\% of cases, but bypass and stealth success remain 30\%. Always-reference screening reduces the residual to 30.773 kWh and recovers 93.750\% for these stealth rows even when detection is weak.
+
+\begin{table*}[t]
+\centering
+\caption{Representative IEEE 34-bus advanced defense and stealth-stress outcomes.}
+\label{tab:ieee34_advanced_defense}
+\scriptsize
+\begin{tabular}{llcccc}
+\hline
+Attack group & Defense profile & Detection & Mean $D$ & Residual $R$ & Recovery \\
+\hline
+\texttt{highimpact\_dispatch\_s890\_voltage\_816} & Current + always-reference & 100.000\% & 3080.849 & 44.770 & 94.118\% \\
+\texttt{highimpact\_dispatch\_s890\_voltage\_816} & Current + gated screening & 100.000\% & 3080.849 & 44.770 & 94.118\% \\
+\texttt{highimpact\_dispatch\_s890\_voltage\_816} & Relaxed + always-reference & 66.667\% & 3080.849 & 44.770 & 94.118\% \\
+\texttt{highimpact\_dispatch\_s890\_voltage\_816} & Relaxed + gated screening & 66.667\% & 3080.849 & 3050.395 & 7.771\% \\
+\texttt{highimpact\_dispatch\_s890\_line\_l8\_voltage\_816} & Current + always-reference & 100.000\% & 3065.622 & 44.770 & 94.118\% \\
+\texttt{highimpact\_dispatch\_s890\_line\_l8\_voltage\_816} & Relaxed + gated screening & 66.667\% & 3065.622 & 3065.622 & 0.000\% \\
+\texttt{stealth\_load\_s890\_single\_mask} & Relaxed + gated screening & 0.000\% & 3038.190 & 3038.190 & 0.000\% \\
+\texttt{stealth\_load\_s890\_single\_mask} & Relaxed + always-reference & 0.000\% & 3038.190 & 30.773 & 93.750\% \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsubsection{Learning-Detector Ablation}
+\label{subsubsec:ieee34_learning_detector}
+
+The learning-detector ablation provides a useful but bounded result. The KNN, linear neural, and MLP detector models achieve 100\% binary and multiclass accuracy/F1 on the frozen learning-detector data, while the centroid detector achieves 82.143\% binary accuracy and 82.727\% multiclass accuracy. In the defense ablation table, adding the learning detector can increase detection for relaxed-status high-impact attacks. For \texttt{highimpact\_dispatch\_s890\_line\_l8\_voltage\_816}, detection improves from 66.667\% to 96.667\%.
+
+However, the learning detector does not automatically reduce residual degradation. In the relaxed-status gated configuration, detection improves but residual degradation remains 3065.622 kWh and recovery remains 0\%. This means that the learned detector signal must be coupled to a mitigation architecture capable of selecting a better physical action. The result supports the paper's central separation: detection accuracy, by itself, is not the same as restoration resilience.
+
+\subsection{IEEE 123-Bus Case Study}
+\label{subsec:ieee123_results}
+
+\subsubsection{Baseline Attack-Family Ranking}
+\label{subsubsec:ieee123_baseline_families}
+
+The IEEE 123-bus feeder shows a different baseline vulnerability profile from the IEEE 34-bus feeder. In the baseline attack-family ranking, branch-flow hiding is the most damaging family, with mean degradation 104.039 kWh, total degradation 3121.162 kWh, maximum degradation 1559.847 kWh, and six damaging cases out of 30. The detection rate is 80.000\%, and the baseline mitigation recovery ratio is 66.667\%.
+
+Topology drop is the second most damaging baseline family, with mean degradation 56.222 kWh, total degradation 1686.653 kWh, maximum degradation 884.793 kWh, and three damaging cases. Voltage masking produces one damaging case with maximum degradation 786.306 kWh. Energy inflation produces one damaging case with maximum degradation 322.342 kWh. Action-mask false-unavailable attacks have the smallest baseline family mean, 7.586 kWh, but the later exhaustive criticality study shows that this baseline average hides very large target-specific action-mask vulnerabilities.
+
+\begin{table}[t]
+\centering
+\caption{IEEE 123-bus baseline attack-family outcomes.}
+\label{tab:ieee123_attack_family}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Attack family & Cases & Mean $D$ & Max $D$ & Damaging & Recovery \\
+\hline
+Branch-flow hiding & 30 & 104.039 & 1559.847 & 6 & 66.667\% \\
+Topology drop & 30 & 56.222 & 884.793 & 3 & 66.667\% \\
+Voltage masking & 30 & 26.210 & 786.306 & 1 & 100.000\% \\
+Energy inflation & 30 & 10.745 & 322.342 & 1 & 100.000\% \\
+Action-mask false unavailable & 30 & 7.586 & 76.690 & 9 & 100.000\% \\
+\hline
+\end{tabular}
+\end{table}
+
+The worst baseline branch-flow case is \texttt{B0014\_branchflow\_hiding\_seed611696197}, which loses 1559.847 kWh before mitigation and is fully recovered. The next major cases include \texttt{B0002\_topology\_drop\_seed1519571662} with 884.793 kWh degradation, \texttt{B0002\_branchflow\_hiding\_seed1519571662} with 884.428 kWh degradation, \texttt{B0015\_topology\_drop\_seed630833044} with 798.165 kWh degradation, and \texttt{B0015\_voltage\_masking\_seed630833044} with 786.306 kWh degradation. Most of these worst baseline cases are fully recovered, but some small residuals remain in lower-impact detected cases, including a 5.193 kWh residual for a branch-flow hiding case and a 3.695 kWh residual for a topology-drop case.
+
+\subsubsection{Exhaustive Action-Mask Criticality}
+\label{subsubsec:ieee123_action_mask}
+
+The exhaustive IEEE 123-bus action-mask criticality study changes the interpretation of the action-mask family. While the random/baseline action-mask family has a small mean degradation, targeted action-mask corruption can be severe. The most critical target is \texttt{action\_mask.Load\_s48}, with mean degradation 2317.398 kWh, maximum degradation 4178.924 kWh, and 17 damaging cases out of 30. Detection is 100\%, and mitigation recovers 100\%.
+
+The second-ranked target, \texttt{action\_mask.Load\_s64b}, has mean degradation 893.643 kWh, maximum degradation 1506.877 kWh, and 18 damaging cases, again with full recovery. Several other load-action targets have mean degradation between 300 and 500 kWh: \texttt{Load\_s16c}, \texttt{Load\_s82a}, \texttt{Load\_s107b}, \texttt{Load\_s20a}, \texttt{Load\_s30c}, \texttt{Load\_s69a}, \texttt{Load\_s109a}, \texttt{Load\_s49a}, and \texttt{Load\_s88a}. These rows show that action/status FDIA remains a major vulnerability class in the larger feeder, but the risk is concentrated in particular restoration actions rather than uniformly distributed over all mask entries.
+
+\begin{table*}[t]
+\centering
+\caption{Top IEEE 123-bus exhaustive action-mask criticality results.}
+\label{tab:ieee123_action_mask_criticality}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Target & Cases & Mean $D$ & Max $D$ & Damaging & Recovery \\
+\hline
+\texttt{action\_mask.Load\_s48} & 30 & 2317.398 & 4178.924 & 17 & 100.000\% \\
+\texttt{action\_mask.Load\_s64b} & 30 & 893.643 & 1506.877 & 18 & 100.000\% \\
+\texttt{action\_mask.Load\_s16c} & 30 & 493.104 & 793.158 & 24 & 79.167\% \\
+\texttt{action\_mask.Load\_s82a} & 30 & 454.505 & 929.886 & 19 & 89.474\% \\
+\texttt{action\_mask.Load\_s107b} & 30 & 450.292 & 800.685 & 22 & 77.273\% \\
+\texttt{action\_mask.Load\_s20a} & 30 & 427.315 & 877.289 & 17 & 94.118\% \\
+\texttt{action\_mask.Load\_s30c} & 30 & 416.871 & 795.480 & 18 & 94.444\% \\
+\texttt{action\_mask.Load\_s69a} & 30 & 360.346 & 932.208 & 15 & 100.000\% \\
+\texttt{action\_mask.Load\_s109a} & 30 & 341.639 & 931.229 & 17 & 88.235\% \\
+\texttt{action\_mask.Load\_s49a} & 30 & 330.050 & 779.506 & 14 & 100.000\% \\
+\texttt{action\_mask.Load\_s88a} & 30 & 302.656 & 890.351 & 13 & 92.308\% \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsubsection{Branch-Flow Single-Target and Coordinated Subset Results}
+\label{subsubsec:ieee123_branchflow}
+
+The branch-flow evidence is one of the clearest IEEE 123-bus findings. The baseline branch-flow hiding attack can be damaging, but the exhaustive single-target branch-flow criticality scan finds almost no harmful individual target. The top single branch-flow target, \texttt{branchflow.Line.l115}, has mean degradation 0.001 kWh, maximum degradation 0.022 kWh, and one damaging case. The regulator target \texttt{branchflow.Transformer.reg1a} and line target \texttt{branchflow.Line.sw1} have the same maximum degradation, 0.022 kWh. Most other single branch-flow targets have zero degradation.
+
+The subset ablation explains the apparent contradiction. A top-1 or top-2 branch-flow subset reproduces only 0.001\% of the baseline branch-flow degradation. A top-3 subset reproduces 74.727\% of the baseline total degradation, with total degradation 2332.341 kWh, mean degradation 388.723 kWh, maximum degradation 884.428 kWh, and four damaging cases. A top-10 subset reproduces 100.299\% of the baseline total degradation. The full branch-flow subset has total degradation 3121.162 kWh and maximum degradation 1559.847 kWh.
+
+This result indicates that the IEEE 123 branch-flow vulnerability is not driven by one critical branch-flow sensor. It is a coordinated-observation effect. A single hidden branch-flow feature is almost harmless, but a coordinated subset can reproduce nearly all of the baseline branch-flow degradation.
+
+\begin{table}[t]
+\centering
+\caption{IEEE 123-bus branch-flow subset ablation.}
+\label{tab:ieee123_branchflow_subset}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Subset & Cases & Total $D$ & Mean $D$ & Max $D$ & Reproduction \\
+\hline
+Top-1 & 6 & 0.022 & 0.004 & 0.022 & 0.001\% \\
+Top-2 & 6 & 0.022 & 0.004 & 0.022 & 0.001\% \\
+Top-3 & 6 & 2332.341 & 388.723 & 884.428 & 74.727\% \\
+Top-5 & 6 & 2332.344 & 388.724 & 884.428 & 74.727\% \\
+Top-10 & 6 & 3130.509 & 521.751 & 884.428 & 100.299\% \\
+Full & 6 & 3121.162 & 520.194 & 1559.847 & 100.000\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Defense-Stress Results}
+\label{subsubsec:ieee123_defense_stress}
+
+The IEEE 123 defense-stress summary contains 190 groups and identifies the attack groups that retain residual degradation after the current defense. The largest residual group is \texttt{action\_mask.Load\_s82a}: total attacked degradation 13635.136 kWh, total residual degradation 1290.263 kWh, recovered-degradation ratio 90.537\%, and worst residual 674.986 kWh. The next largest residual group is \texttt{action\_mask.Load\_s88a}, with total attacked degradation 9079.693 kWh, total residual 849.639 kWh, recovery 90.642\%, and worst residual 849.639 kWh.
+
+Other action-mask groups retain smaller residuals: \texttt{Load\_s109a} has total residual 232.796 kWh and recovery 97.729\%; \texttt{Load\_s107b} has total residual 167.644 kWh and recovery 98.759\%. Switch-related residual groups include \texttt{swsec13}, with total degradation 22.635 kWh, residual 21.875 kWh, and recovery 3.354\%; \texttt{swtie8}, with total residual equal to total degradation at 19.455 kWh and zero recovery; and \texttt{swtie6}, with total degradation 95.832 kWh, residual 10.024 kWh, and recovery 89.541\%.
+
+For the baseline branch-flow hiding group, total attacked degradation is 3121.162 kWh, residual degradation is 5.196 kWh, and recovery is 99.834\%. The full branch-flow subset group has the same aggregate residual and recovery. Baseline topology drop has total degradation 1686.653 kWh, residual degradation 3.695 kWh, and recovery 99.781\%. These results show that the current defense is highly effective for branch-flow and topology-drop baseline cases after detection, but selected action-mask groups remain the main residual-risk source in IEEE 123.
+
+\begin{table*}[t]
+\centering
+\caption{Selected IEEE 123-bus defense-stress groups with nonzero residual degradation.}
+\label{tab:ieee123_defense_stress}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Group & Cases & Total $D$ & Total residual $R$ & Worst $R$ & Recovery \\
+\hline
+\texttt{action\_mask.Load\_s82a} & 30 & 13635.136 & 1290.263 & 674.986 & 90.537\% \\
+\texttt{action\_mask.Load\_s88a} & 30 & 9079.693 & 849.639 & 849.639 & 90.642\% \\
+\texttt{action\_mask.Load\_s109a} & 30 & 10249.179 & 232.796 & 196.736 & 97.729\% \\
+\texttt{action\_mask.Load\_s107b} & 30 & 13508.764 & 167.644 & 97.023 & 98.759\% \\
+\texttt{action\_mask.swsec13} & 30 & 22.635 & 21.875 & 21.875 & 3.354\% \\
+\texttt{action\_mask.swtie8} & 30 & 19.455 & 19.455 & 19.455 & 0.000\% \\
+\texttt{action\_mask.swtie6} & 30 & 95.832 & 10.024 & 10.024 & 89.541\% \\
+\texttt{baseline.branchflow\_hiding} & 30 & 3121.162 & 5.196 & 5.193 & 99.834\% \\
+\texttt{branchflow.full\_subset} & 6 & 3121.162 & 5.196 & 5.193 & 99.834\% \\
+\texttt{baseline.topology\_drop} & 30 & 1686.653 & 3.695 & 3.695 & 99.781\% \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsubsection{Advanced Mitigation Ablation}
+\label{subsubsec:ieee123_advanced_mitigation}
+
+The IEEE 123 advanced mitigation ablation focuses on 58 hard cases that expose weaknesses in the current one-step FDIA-aware defense. In these hard cases, the attacked-no-defense baseline has total residual degradation 2617.432 kWh, maximum residual degradation 849.639 kWh, and zero recovery. The current one-step FDIA-aware variant has the same residual and recovery on this hard-case subset, showing that it does not improve these particular cases.
+
+Four advanced variants recover all degradation in the same 58 cases: all-channel reference only, detector-mitigated only, horizon screening using raw and mitigated candidates, and horizon screening using raw, mitigated, and reference candidates. Each of these variants has total residual degradation 0.000 kWh, maximum residual 0.000 kWh, total recovered degradation 2617.432 kWh, recovery 100\%, 58 cases improved relative to the current defense, and zero cases worse than the current defense. This ablation indicates that the remaining IEEE 123 residual-risk cases are not unavoidable; they are caused by the current defense architecture and can be removed when the mitigation candidate set or screening horizon is strengthened.
+
+\begin{table*}[t]
+\centering
+\caption{IEEE 123-bus advanced mitigation ablation on 58 hard cases.}
+\label{tab:ieee123_advanced_mitigation}
+\scriptsize
+\begin{tabular}{lccccc}
+\hline
+Variant & Cases & Total attacked $D$ & Total residual $R$ & Recovery & Improved vs. current \\
+\hline
+\texttt{attacked\_no\_defense} & 58 & 2617.432 & 2617.432 & 0.000\% & 0 \\
+\texttt{current\_one\_step\_fdia\_aware} & 58 & 2617.432 & 2617.432 & 0.000\% & 0 \\
+\texttt{all\_channel\_reference\_only} & 58 & 2617.432 & 0.000 & 100.000\% & 58 \\
+\texttt{detector\_mitigated\_only} & 58 & 2617.432 & 0.000 & 100.000\% & 58 \\
+\texttt{horizon\_screen\_raw\_mitigated} & 58 & 2617.432 & 0.000 & 100.000\% & 58 \\
+\texttt{horizon\_screen\_raw\_mitigated\_reference} & 58 & 2617.432 & 0.000 & 100.000\% & 58 \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsection{Companion Controller Evidence}
+\label{subsec:companion_controller_evidence}
+
+The main paper evidence is centered on the GRL restoration controller, but companion controller artifacts are useful for positioning the results. For IEEE 34, an MLP companion evidence package exists, but the paper-facing MLP rows report zero positive physical degradation across the advanced defense, attack family, attack sensitivity, branch-flow, coordinated, dispatch-load criticality, line-status, switch, and voltage studies. This does not invalidate the GRL IEEE 34 findings; rather, it indicates that the MLP policy evaluated in the companion package did not exhibit the same positive-degradation vulnerabilities under the frozen paper-facing attacks.
+
+For IEEE 123, the MLP companion package reports branch-flow hiding as the most damaging baseline family, with mean degradation 54.449 kWh, maximum degradation 829.460 kWh, and two damaging cases, with 100\% recovery. MLP action-mask false-unavailable attacks have mean degradation 26.801 kWh, maximum degradation 804.024 kWh, and one damaging case, also with 100\% recovery. Energy inflation, topology drop, and voltage masking report zero positive baseline degradation for the MLP controller.
+
+A scoped BPSO evidence package is also available for IEEE 123. In that package, action-mask false-unavailable attacks are the dominant scoped vulnerability, with mean degradation 678.300 kWh, maximum degradation 4439.399 kWh, 15 damaging cases, 100\% detection, and 86.667\% recovery. The BPSO interpretation must remain scoped: the optimizer uses the received action mask as a constraint and scores candidates on the physical OpenDSS outage scenario. Thus, action-mask/status FDIA is directly decision-relevant for BPSO, while branch-flow, voltage, topology, and energy-channel FDIA require a richer perceived-objective BPSO model before fully comparable vulnerability claims can be made.
+
+\begin{table*}[t]
+\centering
+\caption{Companion controller evidence for contextual comparison.}
+\label{tab:companion_controller_evidence}
+\scriptsize
+\begin{tabular}{llllccccc}
+\hline
+Feeder & Controller & Evidence level & Dominant attack & Cases & Mean $D$ & Max $D$ & Damaging & Recovery \\
+\hline
+IEEE 34 & GRL & Full frozen case study & Coordinated \texttt{Load\_s890} attacks & 30 & 3080.849 & 9115.475 & 17 & 94.118\% \\
+IEEE 34 & MLP & Companion paper-facing rows & No positive-degradation row & -- & 0.000 & 0.000 & 0 & -- \\
+IEEE 123 & GRL & Full frozen case study & Baseline branch-flow hiding & 30 & 104.039 & 1559.847 & 6 & 66.667\% \\
+IEEE 123 & GRL & Exhaustive criticality & \texttt{action\_mask.Load\_s48} & 30 & 2317.398 & 4178.924 & 17 & 100.000\% \\
+IEEE 123 & MLP & Full frozen companion & Branch-flow hiding & 30 & 54.449 & 829.460 & 2 & 100.000\% \\
+IEEE 123 & BPSO & Scoped action-mask package & Action-mask false unavailable & 30 & 678.300 & 4439.399 & 15 & 86.667\% \\
+\hline
+\end{tabular}
+\end{table*}
+
+\subsection{Cross-Feeder Discussion}
+\label{subsec:cross_feeder_discussion}
+
+\subsubsection{Dominant Vulnerability Mechanisms Differ by Feeder}
+\label{subsubsec:dominant_mechanisms}
+
+The IEEE 34-bus and IEEE 123-bus studies do not produce a single universal ranking of attack families. In IEEE 34, the dominant risk is action/status corruption of specific restoration decisions, especially \texttt{Load\_s890} and \texttt{Load\_s844}. Baseline branch-flow hiding and topology drop are largely benign in the aggregate IEEE 34 attack-family table, although topology/status targets and coordinated combinations can still be damaging.
+
+In IEEE 123, baseline branch-flow hiding is the most damaging broad attack family, but exhaustive single-target branch-flow analysis shows that the vulnerability is coordinated rather than single-sensor. At the same time, exhaustive action-mask criticality reveals that selected action-mask targets can be far more damaging than the baseline action-mask average suggests. Thus, the larger feeder exhibits both coordinated measurement-channel vulnerability and high-impact action/status vulnerability.
+
+\subsubsection{Baseline Family Means Can Hide Target-Specific Risk}
+\label{subsubsec:baseline_vs_criticality}
+
+The strongest example is IEEE 123 action-mask FDIA. The baseline action-mask family mean is only 7.586 kWh, but the exhaustive target \texttt{action\_mask.Load\_s48} has mean degradation 2317.398 kWh and maximum degradation 4178.924 kWh. Similarly, IEEE 34 baseline action-mask attacks average 46.603 kWh, while the critical \texttt{Load\_s890} target averages 3038.190 kWh and reaches 8832.380 kWh. Therefore, the paper should not rely only on random or family-level averages. A credible cyber-physical vulnerability assessment must include target-level criticality ranking.
+
+\subsubsection{Detection Is Necessary but Not Sufficient}
+\label{subsubsec:detection_not_sufficient}
+
+Both feeders show that high detection rates do not automatically imply high resilience. In IEEE 34, the relaxed-status detector with gated candidate screening can detect 66.667\% of high-impact cases yet recover only 7.771\%, or even 0\%, depending on the coordinated attack. Adding a learning detector can raise detection to 96.667\% for one relaxed-status group but still leave zero recovery if the mitigation gate and candidate set do not select a better action.
+
+In IEEE 123, the current defense recovers almost all branch-flow and topology-drop baseline degradation, but selected action-mask defense-stress groups retain large residuals. The advanced mitigation ablation demonstrates that these residuals can be eliminated by stronger candidate generation or horizon screening. The defense conclusion is therefore architectural: resilience requires both attack detection and an action-selection mechanism that can choose a physically superior candidate under uncertainty.
+
+\subsubsection{Reference and Horizon Screening Are Strong Benchmarks}
+\label{subsubsec:reference_horizon_screening}
+
+Always-reference screening is the strongest IEEE 34 defense benchmark for high-impact and stealth action/status attacks. It substantially reduces residual degradation even when the detector is relaxed or when stealth attacks bypass the detector. However, it should be described carefully: it assumes access to a trusted reference, screened observation, or equivalent state-estimation source and is therefore a robust benchmark rather than a free substitute for detection.
+
+For IEEE 123, horizon-screened mitigation and detector-mitigated/reference variants recover all residual degradation in the 58 hard cases. This suggests that the remaining failures of the current one-step mitigation are not caused by OpenDSS infeasibility or unavoidable physical constraints. They are caused by the limited information or candidate set used by the current mitigation rule. The practical implication is that online deployment should pair detection with a trusted state-estimation or digital-twin layer capable of evaluating candidate restoration actions before execution.
+
+\subsubsection{Action/Status Observations Are a First-Class Cyber-Physical Attack Surface}
+\label{subsubsec:action_status_attack_surface}
+
+The results support treating action/status observations as first-class security-critical data. In both feeders, making a high-value restoration action appear unavailable can remove the clean policy's preferred path to load restoration. This attack differs from classical false-data injection against state estimation because it does not need to create a physically plausible load-flow state estimate. Instead, it corrupts the controller's decision interface. The physical feeder remains unchanged, but the policy's feasible action set or perceived availability changes. This is especially consequential for learning-based restoration controllers that use masks to suppress unavailable actions before final action selection.
+
+\subsubsection{Negative Results Are Informative}
+\label{subsubsec:negative_results}
+
+Several attack families or target classes have zero or near-zero degradation in specific studies. These negative results are useful because they identify where the current controller is insensitive under the tested outage distribution. IEEE 34 branch-flow hiding has no positive baseline degradation, and IEEE 123 single-target branch-flow hiding is almost harmless despite the damaging coordinated branch-flow baseline. IEEE 34 MLP companion rows also show no positive paper-facing degradation. These results should be reported rather than hidden, because they narrow the validated vulnerability claim and prevent overgeneralization.
+
+\subsection{Manuscript-Level Result Claims}
+\label{subsec:manuscript_level_claims}
+
+The following claims are directly supported by the frozen evidence:
+
+\begin{enumerate}
+    \item Observation-level FDIA can cause large physical restoration losses even though the physical feeder state is not changed by the attacker. The loss occurs because the restoration controller selects a different action from the corrupted observation.
+    \item Action/status mask corruption is a dominant vulnerability in both feeders when the attacked mask entry corresponds to a high-value restoration action. The strongest IEEE 34 target averages 3038.190 kWh degradation, and the strongest IEEE 123 target averages 2317.398 kWh degradation.
+    \item Baseline attack-family averages are not sufficient for security assessment. Exhaustive or targeted observation criticality can reveal vulnerabilities that random family-level attacks dilute.
+    \item IEEE 123 branch-flow vulnerability is coordinated. Single branch-flow targets produce almost no degradation, while top-3 and top-10 coordinated subsets reproduce 74.727\% and 100.299\% of the baseline branch-flow degradation, respectively.
+    \item Detection and mitigation must be evaluated separately. High detection can coexist with high residual degradation if the mitigation action set is weak or if mitigation is gated too tightly on the detector.
+    \item Stronger candidate screening, trusted-reference screening, and horizon-screened mitigation can recover most or all degradation in the hardest evaluated cases, but reference-based variants should be presented as robust benchmarks requiring trusted information.
+    \item The current results support IEEE 34-bus and IEEE 123-bus claims only. IEEE 8500-node validation remains future work pending HPC-scale experiments.
+\end{enumerate}
+
